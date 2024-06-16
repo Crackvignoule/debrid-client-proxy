@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Override Tailwind defaults */
+html, body, #root {
+  background-color: black; /* Set background color to black */
+  color: white; /* Set text color to white */
+  height: 100%; /* Ensure full height */
+}
