@@ -1,28 +1,30 @@
 @tailwind base;
 
-@layer base {
-    h1 {
-      @apply text-2xl;
-    }
-    h2 {
-      @apply text-xl;
-    }
-    h3 {
-      @apply text-lg;
-    }
-    a {
-      @apply text-blue-600 underline;
-    }
-  }
+// @layer base {
+//     h1 {
+//       @apply text-2xl;
+//     }
+//     h2 {
+//       @apply text-xl;
+//     }
+//     h3 {
+//       @apply text-lg;
+//     }
+//     a {
+//       @apply text-blue-600 underline;
+//     }
+//   }
 
 @tailwind components;
 @tailwind utilities;
 
-// TODO Tailwind preflight destroyed the default styles, so we need to add them back, for example body had margin but also all headers styles ar gone (h1, h2...). Also html background is white, why???
+// // TODO Tailwind preflight destroyed the default styles, is there a better way to change bkg color and margin of body ?
 
-/* Override Tailwind defaults */
+// /* Override Tailwind defaults */
 html, body {
-  background-color: black; /* Set background color to black */
-  color: white; /* Set text color to white */
-  height: 100%; /* Ensure full height */
+  background-color: #000000 !important;
+  margin: 0.3rem !important;
+  // height: 100% !important;
+  // color: #ffffff !important;
+  // margin: 0 !important;
 }
