@@ -5,9 +5,10 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "cd server && nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.3"
   }
 }
