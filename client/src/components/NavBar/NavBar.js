@@ -7,8 +7,8 @@ function NavBar() {
     <nav className="navbar">
       <h1 className="navbar__title">My Dashboard</h1>
       <div className="navbar__links">
-        <NavLink >Page 1</NavLink>
-        <NavLink >Page 2</NavLink>
+        <NavLink className="navbar__link" to="/page1">Page 1</NavLink>
+        <NavLink className="navbar__link" to="/page2">Page 2</NavLink>
       </div>
       <div className="navbar__settings">
         <i className="fas fa-cog"></i>

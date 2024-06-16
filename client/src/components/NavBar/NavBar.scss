@@ -3,8 +3,24 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 20px;
     color: white;
     border-radius: 20px;
+
+    .navbar__links {
+        display: flex;
+        gap: 20px;
+        padding-left: 50px;
+    
+        .navbar__link {
+          color: white;
+          text-decoration: none;
+          transition: color 0.3s ease;
+    
+          &:hover {
+            color: rgb(150, 150, 150);
+          }
+        }
+      }
   }
