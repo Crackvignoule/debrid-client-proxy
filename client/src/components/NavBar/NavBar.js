@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { Settings } from 'lucide-react';
 import './NavBar.scss';
 
 function NavBar() {
@@ -14,7 +13,7 @@ function NavBar() {
         <NavLink className="navbar__link" to="/page2">Page 2</NavLink>
       </div>
       <NavLink className="navbar__settings" to="/settings">
-        <FontAwesomeIcon icon={faCog} />
+        <Settings />
       </NavLink>
     </nav>
   );
