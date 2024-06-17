@@ -1,9 +1,11 @@
 .input-container {
     display: flex;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-between; // This will place the button to the right
+    align-items: center; // This will center items vertically
+    width: 40%;
+    margin: 2vh auto;
   
     .input-field {
-      width: 30%; // Adjust width as needed
+      width: 100%; // Adjust width as needed
     }
-  }
+}

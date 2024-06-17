@@ -13,7 +13,7 @@ function Settings() {
   } = useApiKey(initialKey);
 
   return (
-    <div>
+    <div className='input-container'>
       {/* <h1>Settings</h1> */}
       <InputField
         isInvalid={isValid}
