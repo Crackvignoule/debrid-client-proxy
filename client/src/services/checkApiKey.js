@@ -1,16 +1,12 @@
 const checkApiKey = (key) => {
-  const apiEndpoint = `http://api.alldebrid.com/v4/user?agent=myAppName&apikey=${key}`;
-
-  return fetch(apiEndpoint)
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        return Promise.resolve();
-      } else {
-        return Promise.reject();
+  return fetch(`/api/checkApiKey/${key}`)
+    .then((res) => res.json())
+    .then((res) => {
+      if (!res.isValid) {
+        throw new Error("API key is invalid");
       }
-    })
-    .catch(() => Promise.reject());
+      return res;
+    });
 };
 
 export default checkApiKey;
