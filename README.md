@@ -17,5 +17,8 @@ cd client/ ; npm start
 This way I don't have to have a dev & prod config.
     
 ```bash
-cd client/ ; npm run build ; cd ../server ; npm start
+cd server/
+``` 
+```bash
+cd ../client/ ; npm run build ; cd ../server ; npm start
 ```
