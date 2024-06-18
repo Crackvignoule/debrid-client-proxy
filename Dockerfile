@@ -8,11 +8,13 @@ RUN npm run build
 
 # Use another Node.js image to build your server app
 FROM node:current-alpine
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/server
 COPY server/package*.json ./
 RUN npm install
-COPY server/ ./server
-# Copy the built client app from the previous stage
+COPY server/ ./
+
+# Change working directory back to /usr/src/app before copying the client build
+WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/build ./client/build
 EXPOSE 5000
 CMD [ "node", "server/server.js" ]
