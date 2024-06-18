@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import checkApiKey from './checkApiKey';
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import checkApiKey from "../api/checkApiKey";
 
 export default function useApiKey(initialKey) {
   const [apiKey, setApiKey] = useState(initialKey);

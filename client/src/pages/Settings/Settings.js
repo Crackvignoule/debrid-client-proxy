@@ -1,4 +1,4 @@
-import { useApiKey } from '../../services';
+import { useApiKey } from '../../hooks';
 import { InputField, CheckValidityButton } from '../../components';
 import './Settings.scss';
 
