@@ -6,6 +6,14 @@ docker build -t debridclientproxy . ; docker run -dit -p 5000:5000 debridclientp
 
 ## Dev
 
+### Frontend
+
+```bash
+cd client/ ; npm start
+```
+
+### Fullstack
+
 This way I don't have to have a dev & prod config.
     
 ```bash
