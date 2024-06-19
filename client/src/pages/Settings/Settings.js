@@ -1,4 +1,5 @@
 import { Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useApiKey } from "../../hooks";
 import { CheckValidityButton } from "../../components";
 import "./Settings.scss";
@@ -11,6 +12,7 @@ function Settings() {
   return (
     <div className="input-container">
       {/* <h1>Settings</h1> */}
+      {/* TODO Remove duplicate css class */}
 
       <div className="input-container">
         <Input
@@ -25,8 +27,13 @@ function Settings() {
           className="input-field"
         />
       </div>
-
-      <CheckValidityButton handleCheckValidity={CheckValidity} />
+      <Button
+        onClick={CheckValidity}
+        radius="full"
+        className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+      >
+        Check validity
+      </Button>
     </div>
   );
 }
