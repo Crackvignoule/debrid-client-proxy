@@ -2,41 +2,43 @@ import { useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { FileUpload } from "../../components";
-import { useUpload } from "../../hooks/useUpload";
-// TODO use redux ?
+import { useUpload, useDebrid } from "../../hooks";
 
 function Home() {
   const [file, setFile] = useState();
   const { magnetLink, setMagnetLink, upload } = useUpload();
+  const { debridMagnet, debridResult } = useDebrid();
 
-// TODO toaster if user is clicking on disabled input
+  // TODO FIRST: Button launch debrid() wether its a file or a magnet link, then debrid() will use /api/getMagnetID and /api/debridMagnet and setDebridResult
+
+  const handleUpload = (input) => {
+    upload(input);
+    debridMagnet(magnetLink);
+  };
+
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
       <p>This is the home page.</p>
-      <FileUpload file={file} setFile={setFile} disabled={!!magnetLink}/>
+      <FileUpload file={file} setFile={setFile} disabled={!!magnetLink} />
 
       <Input
         variant="faded"
-        // key={apiKey}
         isClearable
         label="Magnet Link"
         onChange={(e) => setMagnetLink(e.target.value)}
         disabled={!!file}
-        // isInvalid={isValid === false}
-        // value={apiKey}
-        // onChange={updateApiKey}
-        // onClear={clearApiKey}
-        // className="input-field"
       />
-
+      {/* TODO Add a check to check valid magnet link */}
       <Button
-        onClick={() => upload(magnetLink || file)}
+        onClick={() => handleUpload(magnetLink || file)}
         radius="full"
         className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
       >
         Debrid
       </Button>
+
+      {debridResult && <p>Debrid result: {JSON.stringify(debridResult)}</p>}
     </div>
   );
 }

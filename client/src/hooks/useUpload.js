@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export function useUpload() {
+  // TODO remove useState '' input ?
   const [magnetLink, setMagnetLink] = useState("");
 
   const upload = (input) => {
