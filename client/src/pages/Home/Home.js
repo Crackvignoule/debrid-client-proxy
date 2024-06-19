@@ -7,14 +7,9 @@ import { useUpload, useDebrid } from "../../hooks";
 function Home() {
   const [file, setFile] = useState();
   const { magnetLink, setMagnetLink, upload } = useUpload();
-  const { debridMagnet, debridResult } = useDebrid();
+  const { debrid, debridResult } = useDebrid();
 
   // TODO FIRST: Button launch debrid() wether its a file or a magnet link, then debrid() will use /api/getMagnetID and /api/debridMagnet and setDebridResult
-
-  const handleUpload = (input) => {
-    upload(input);
-    debridMagnet(magnetLink);
-  };
 
   return (
     <div>
@@ -31,7 +26,7 @@ function Home() {
       />
       {/* TODO Add a check to check valid magnet link */}
       <Button
-        onClick={() => handleUpload(magnetLink || file)}
+        onClick={() => debrid(magnetLink || file)}
         radius="full"
         className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
       >

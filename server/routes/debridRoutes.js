@@ -1,11 +1,12 @@
 const express = require('express');
-// const axios = require('axios');
 const router = express.Router();
+const axios = require('axios');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // TODO Maybe functions shouldnt be here
+// TODO 
 // TODO magnetortorrent logic different than in input instanceof File or input === 'string'
-// const API_KEY = 'your_api_key'; // Replace with your API key
-// const agent = 'myAppName'; // Replace with your app name
 
 async function getMagnetId(magnetOrTorrent, apiKey) {
   const agent = 'myAppName'; // Replace with your app name
@@ -44,13 +45,15 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
   }
 }
 
-router.post('/api/getMagnetID', async (req, res) => {
-  const { magnetOrTorrent } = req.body;
-  const apiKey = req.headers['x-api-key']; // Replace 'x-api-key' with the name of the header field that will contain the API key
+router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
+  const { magnetLink } = req.body;
+  const { file } = req;
+  const apiKey = req.headers['api-key'];
 
-  if (magnetOrTorrent) {
+  if (magnetLink || file) {
     try {
-      const id = await getMagnetId(magnetOrTorrent, apiKey);
+      console.log('Received magnet link or torrent file:', magnetLink || file.path);
+      const id = await getMagnetId(magnetLink || file.path, apiKey);
       res.json({ id });
     } catch (error) {
       res.status(500).json({ error: 'Failed to upload magnet link or torrent file' });

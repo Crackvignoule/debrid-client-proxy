@@ -6,6 +6,10 @@ const app = express();
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 
+// Parse incoming requests data
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); 
+
 // Use api routes
 app.use('/api', apiRoutes);
 
