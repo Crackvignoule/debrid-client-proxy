@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const agent = "myAppName";
+
 router.get('/:key', async (req, res) => {
-    const key = req.params.key;
-    const apiEndpoint = `http://api.alldebrid.com/v4/user?agent=myAppName&apikey=${key}`;
+    const API_KEY = req.params.key;
+    const apiEndpoint = `http://api.alldebrid.com/v4/user?agent=${agent}&apikey=${API_KEY}`;
   
     try {
       const response = await fetch(apiEndpoint);

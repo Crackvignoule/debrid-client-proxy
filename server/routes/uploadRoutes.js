@@ -11,6 +11,7 @@ const upload = multer({
 router.post("/", upload.single('file'), (req, res) => {
   // req.file is the 'file' object
   // req.body will hold the text fields, if there were any
+  console.log(req.file);
   if (!req.file) {
     return res.status(400).send('No file uploaded');
   }
