@@ -30,58 +30,39 @@ export function useDebrid() {
     }
   };
 
-  const getMagnetID = (magnetOrTorrent) => {
+  const getMagnetID = async (input) => {
     const apiKey = localStorage.getItem("apiKey");
-  
-    if (typeof magnetOrTorrent === 'string') {
+    let data;
+    let headers;
+
+    if (typeof input === 'string') {
       // Handle magnet link
-      axios
-        .post('/api/debrid/getMagnetID', {
-          magnetLink: magnetOrTorrent
-        }, {
-          headers: {
-            'api-key': apiKey
-          }
-        })
-        .then((response) => {
-          console.log("Magnet ID received: ", response.data.id);
-          debridMagnet(response.data.id);
-        })
-        .catch((error) => {
-          console.error("Error getting magnet ID: ", error);
-        });
+      data = { magnetLink: input };
+      headers = { 'api-key': apiKey };
     } else {
       // Handle file
-      const formData = new FormData();
-      formData.append('file', magnetOrTorrent);
-  
-      axios
-        .post("/api/debrid/getMagnetID", formData, {
-          headers: {
-            'api-key': apiKey,
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then((response) => {
-          console.log("Magnet ID received: ", response.data.id);
-          debridMagnet(response.data.id);
-        })
-        .catch((error) => {
-          console.error("Error getting magnet ID: ", error);
-        });
+      data = new FormData();
+      data.append('torrent', input);
+      headers = { 'api-key': apiKey };
+    }
+
+    try {
+      const response = await axios.post('/api/debrid/getMagnetID', data, { headers });
+      console.log("Magnet ID received: ", response.data.id);
+      debridMagnet(response.data.id);
+    } catch (error) {
+      console.error("Error getting magnet ID: ", error);
     }
   };
 
-  const debridMagnet = (magnetID) => {
-    axios
-      .post("/api/debrid/debridMagnet", { magnetID })
-      .then((response) => {
-        setDebridResult(response.data);
-        console.log("Magnet link debrided successfully");
-      })
-      .catch((error) => {
-        console.error("Error debriding magnet link: ", error);
-      });
+  const debridMagnet = async (magnetID) => {
+    try {
+      const response = await axios.post("/api/debrid/debridMagnet", { magnetID });
+      setDebridResult(response.data);
+      console.log("Magnet link debrided successfully");
+    } catch (error) {
+      console.error("Error debriding magnet link: ", error);
+    }
   };
 
   return { debrid, debridResult };

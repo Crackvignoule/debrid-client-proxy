@@ -46,10 +46,10 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
 }
 
 router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
-  const { magnetLink } = req.body;
-  const { file } = req;
   const apiKey = req.headers['api-key'];
-
+  const { magnetLink } = req.body;
+  const file = req.file;
+  
   if (magnetLink || file) {
     try {
       console.log('Received magnet link or torrent file:', magnetLink || file.path);
