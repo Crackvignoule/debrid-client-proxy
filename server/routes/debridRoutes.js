@@ -16,8 +16,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 // TODO Maybe functions shouldnt be here
-// TODO 
+// TODO Get rid of some console.logs
+// TODO Global agent and apikey ?
 // TODO magnetortorrent logic different than in input instanceof File or input === 'string'
+// TODO Add support for multiple torrent / magnets debrid
+// TODO Use status live from api to track magnet progress on alldebrid side
 
 async function getMagnetId(magnetOrTorrent, apiKey) {
   const agent = 'myAppName'; // Replace with your app name
@@ -48,7 +51,6 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
       const uploadResponse = await axios.post(`https://api.alldebrid.com/v4/magnet/upload/file?agent=${agent}&apikey=${apiKey}`, formData, {
         headers: formData.getHeaders(),
       });
-      console.log("uploadResponse", uploadResponse.data.data.files[0]);
       // Get the magnet ID
       const magnetID = uploadResponse.data.data.files[0].id;
       return magnetID;
@@ -76,5 +78,44 @@ router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
     res.status(400).json({ error: 'No magnet link or torrent file provided' });
   }
 });
+
+router.post('/getLinksFromMagnet', async (req, res) => {
+  const apiKey = req.headers['api-key'];
+  const { magnetID } = req.body;
+  const agent = 'myAppName'; // Replace with your app name
+  const apiEndpoint = `https://api.alldebrid.com/v4/magnet/status?agent=${agent}&apikey=${apiKey}&id=${encodeURIComponent(magnetID)}`;
+
+  try {
+    const response = await axios.get(apiEndpoint);
+    console.log('Magnet status:', response.data);
+    const links = response.data.data.magnets.links;
+    res.json({ links });
+  } catch (error) {
+    console.error('Failed to get magnet link status', error);
+    res.status(500).json({ error: 'Failed to get magnet link status' });
+  }
+});
+
+router.post("/debridLinks", async (req, res) => {
+  const apiKey = req.headers["api-key"];
+  const { links } = req.body;
+  const agent = "myAppName";
+  
+  // PHP: $apiEndpoint = "https://api.alldebrid.com/v4/link/unlock?agent=myAppName&apikey=someValidApikeyYouGenerated&link=" . urlencode($link);
+  const apiEndpoint = `https://api.alldebrid.com/v4/link/unlock?agent=${agent}&apikey=${apiKey}`;
+
+  try {
+    const debridedLinks = await Promise.all(links.map(async link => {
+      const response = await axios.get(`${apiEndpoint}&link=${encodeURIComponent(link)}`);
+      return response.data;
+    }));
+    res.json({ debridedLinks });
+  }
+  catch (error) {
+    console.error("Error debriding links:", error);
+    res.status(500).json({ error: "Failed to debrid links" });
+  }
+}
+);
 
 module.exports = router;

@@ -6,9 +6,9 @@ export function useDebrid() {
   // TODO Add promise toast
   // TODO When debrid will take normal links, I should review the whole blocking input logic and debrid would take magnetOrTorrentOrLinks
 
-  const debrid = async (magnetLinkOrFile) => {
-    try {
-      const magnetID = await getMagnetID(magnetLinkOrFile);
+const debrid = async (magnetLinkOrFile) => {
+  try {
+    const magnetID = await getMagnetID(magnetLinkOrFile);
       const result = await debridMagnet(magnetID);
       setDebridResult(result);
     } catch (error) {
@@ -39,16 +39,44 @@ export function useDebrid() {
       throw error;
     }
   };
-  
+
   const debridMagnet = async (magnetID) => {
+    const proxyEndpoint = `/api/debrid/getLinksFromMagnet`;
+    const apiKey = localStorage.getItem('apiKey');
+    const headers = { 'api-key': apiKey };
+  
     try {
-      const response = await axios.post("/api/debrid/debridMagnet", { magnetID });
-      setDebridResult(response.data);
-      console.log("Magnet link debrided successfully");
+      const response = await axios.post(proxyEndpoint, { magnetID }, { headers });
+      const links = response.data.links;
+      const debridedLinks = await debridLinks(links.map(linkObj => linkObj.link));
+
+    const result = links.map((linkObj, index) => {
+      return {
+        filename: linkObj.filename,
+        debridedLink: debridedLinks[index]
+      };
+    });
+
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+  const debridLinks = async (links) => {
+    const apiKey = localStorage.getItem('apiKey');
+    const headers = { 'api-key': apiKey };
+    const proxyEndpoint = `/api/debrid/debridLinks`;
+
+    try {
+      const response = await axios.post(proxyEndpoint, { links }, { headers });
+      return response.data.debridedLinks;
     } catch (error) {
-      console.error("Error debriding magnet link: ", error);
+      console.error('Error:', error);
     }
-  };
+  }
+
+    
 
   return { debrid, debridResult };
 }
