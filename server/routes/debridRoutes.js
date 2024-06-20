@@ -1,8 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+
+const path = require('path');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({ storage: storage })
 
 // TODO Maybe functions shouldnt be here
 // TODO 
@@ -23,18 +34,21 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
       return null;
     }
   } else {
+    // TODO move imports to the top ?
     // Handle torrent file
+    const fs = require('fs'); // Import the file system module
+    const FormData = require('form-data'); // Import the form data module
     const formData = new FormData();
 
     // Append the torrent file to the form data
     formData.append('files[0]', fs.createReadStream(magnetOrTorrent));
-
+    
     // Upload the torrent file
     try {
       const uploadResponse = await axios.post(`https://api.alldebrid.com/v4/magnet/upload/file?agent=${agent}&apikey=${apiKey}`, formData, {
         headers: formData.getHeaders(),
       });
-
+      console.log("uploadResponse", uploadResponse.data.data.files[0]);
       // Get the magnet ID
       const magnetID = uploadResponse.data.data.files[0].id;
       return magnetID;
