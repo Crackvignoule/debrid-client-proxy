@@ -1,19 +1,32 @@
+import { toast } from 'react-hot-toast';
 import { useState } from "react";
 import axios from "axios";
 
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState(null);
-  // TODO Add promise toast
+  // TODO Add error toast when debrid fails (wrong api or other reasons)
   // TODO When debrid will take normal links, I should review the whole blocking input logic and debrid would take magnetOrTorrentOrLinks
 
-const debrid = async (magnetLinkOrFile) => {
-  try {
-    const magnetID = await getMagnetID(magnetLinkOrFile);
-      const result = await debridMagnet(magnetID);
-      setDebridResult(result);
-    } catch (error) {
-      console.error("Error in debrid process: ", error);
-    }
+  const debrid = (magnetLinkOrFile) => {
+    const debridPromise = getMagnetID(magnetLinkOrFile)
+      .then(magnetID => debridMagnet(magnetID))
+      .then(result => {
+        setDebridResult(result);
+        return result;
+      })
+      .catch(error => {
+        console.error("Error in debrid process: ", error);
+        throw error; // Ensure the error is re-thrown so the toast.promise can catch it
+      });
+  
+    toast.promise(
+      debridPromise,
+      {
+        loading: 'Debriding...',
+        success: <b>Debrid process completed successfully!</b>,
+        error: <b>Could not debrid.</b>,
+      }
+    );
   };
 
   const getMagnetID = async (input) => {
