@@ -6,7 +6,7 @@ function NavBar() {
   return (
     <nav className="navbar">
       <NavLink className="navbar__title" to="/">
-        <h1>Debrid Client</h1>
+        <img src="/logo.png" alt="Logo" className="navbar__logo" />
       </NavLink>
       <div className="navbar__links">
         <NavLink className="navbar__link" to="/">Home</NavLink>

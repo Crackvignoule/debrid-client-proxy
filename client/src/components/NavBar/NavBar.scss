@@ -42,4 +42,9 @@
         transform: rotate(360deg);
       }
     }
+
+    .navbar__logo {
+      width: 100px; /* adjust as needed */
+      height: auto; /* maintain aspect ratio */
+    }
   }
