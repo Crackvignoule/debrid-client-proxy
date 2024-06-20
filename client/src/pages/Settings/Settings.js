@@ -13,6 +13,7 @@ function Settings() {
     <div className="input-container">
       {/* <h1>Settings</h1> */}
       {/* TODO Remove duplicate css class */}
+      {/* TODO Add button redirect "Get My API Key" */}
       {/* TODO Add support for pin auth, login alldebrid button to get automatically (temp?) api key after user login */}
 
       <div className="input-container">

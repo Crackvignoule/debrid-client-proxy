@@ -1,15 +1,10 @@
-import { useState } from "react";
-import { Input } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
-import { FileUpload } from "../../components";
-import { useUpload, useDebrid } from "../../hooks";
+import { Input, Button } from "@nextui-org/react";
+import { FileUpload, DebridResultTable } from "../../components";
+import { useDebrid, useDebridState } from "../../hooks";
 
 function Home() {
-  const [file, setFile] = useState();
-  const [magnetLink, setMagnetLink] = useState("");
+  const { file, setFile, magnetLink, setMagnetLink } = useDebridState();
   const { debrid, debridResult } = useDebrid();
-
-  // TODO FIRST: Button launch debrid() wether its a file or a magnet link, then debrid() will use /api/getMagnetID and /api/debridMagnet and setDebridResult
 
   return (
     <div>
@@ -33,31 +28,7 @@ function Home() {
         Debrid
       </Button>
 
-      {/* TODO Move this in a component maybe */}
-      {debridResult && (
-        <table>
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Filename</th>
-              <th>Debrided Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {debridResult.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.filename}</td>
-                <td>
-                  <a href={item.debridedLink.data.link}>
-                    {item.debridedLink.data.link}
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      {debridResult && <DebridResultTable debridResult={debridResult} />}
     </div>
   );
 }

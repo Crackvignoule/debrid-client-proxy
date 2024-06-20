@@ -1,5 +1,6 @@
+// TODO useLocalStorage hook good idea ?
 import useApiKey from "./useApiKey";
 import { useDebrid } from "./useDebrid";
-// TODO useLocalStorage good idea ?
+import useDebridState from "./useDebridState";
 
-export { useApiKey, useDebrid };
+export { useApiKey, useDebrid, useDebridState };
