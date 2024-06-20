@@ -1,9 +1,5 @@
 import { useDropzone } from "react-dropzone";
-import { useState } from "react";
-import axios from "axios";
 import "./FileUpload.scss";
-
-import { useUpload } from "../../hooks/useUpload";
 
 // TODO Fix, still disabled when erasing magnet content with clear button
 // TODO Maybe add a cross to remove the file

@@ -6,7 +6,7 @@ import { useUpload, useDebrid } from "../../hooks";
 
 function Home() {
   const [file, setFile] = useState();
-  const { magnetLink, setMagnetLink, upload } = useUpload();
+  const [magnetLink, setMagnetLink] = useState("");
   const { debrid, debridResult } = useDebrid();
 
   // TODO FIRST: Button launch debrid() wether its a file or a magnet link, then debrid() will use /api/getMagnetID and /api/debridMagnet and setDebridResult
