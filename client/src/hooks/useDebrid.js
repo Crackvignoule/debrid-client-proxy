@@ -2,12 +2,35 @@ import { toast } from 'react-hot-toast';
 import { useState } from "react";
 import axios from "axios";
 
+function isValidMagnetLink(link) {
+  const magnetURI = /^magnet:\?xt=urn:btih:[a-zA-Z0-9]{40,}/;
+  return magnetURI.test(link);
+}
+
+function validateInput(magnetLinkOrFile) {
+  if (typeof magnetLinkOrFile === 'string') {
+    if (magnetLinkOrFile.startsWith('magnet:?')) {
+      if (!isValidMagnetLink(magnetLinkOrFile)) {
+        toast.error('Invalid magnet link');
+        return false;
+      }
+    } else {
+      toast.error('Input is not a valid magnet link');
+      return false;
+    }
+  }
+  return true;
+}
+
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState(null);
   // TODO Add error toast when debrid fails (wrong api or other reasons)
-  // TODO When debrid will take normal links, I should review the whole blocking input logic and debrid would take magnetOrTorrentOrLinks
 
-  const debrid = (magnetLinkOrFile) => {
+    const debrid = (magnetLinkOrFile) => {
+      if (!validateInput(magnetLinkOrFile)) {
+        return;
+      }
+
     const debridPromise = getMagnetID(magnetLinkOrFile)
       .then(magnetID => debridMagnet(magnetID))
       .then(result => {
