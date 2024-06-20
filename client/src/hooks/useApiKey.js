@@ -29,6 +29,7 @@ export default function useApiKey(initialKey) {
 
   const clearApiKey = () => {
     setApiKey("");
+    localStorage.removeItem("apiKey");
   };
 
   const CheckValidity = () => {

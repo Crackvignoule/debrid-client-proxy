@@ -1,7 +1,6 @@
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { useApiKey } from "../../hooks";
-import { CheckValidityButton } from "../../components";
 import "./Settings.scss";
 
 function Settings() {
