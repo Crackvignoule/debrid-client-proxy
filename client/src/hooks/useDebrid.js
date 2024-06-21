@@ -7,15 +7,10 @@ function isValidMagnetLink(link) {
   return magnetURI.test(link);
 }
 
-function validateInput(magnetLinkOrFile) {
-  if (typeof magnetLinkOrFile === 'string') {
-    if (magnetLinkOrFile.startsWith('magnet:?')) {
-      if (!isValidMagnetLink(magnetLinkOrFile)) {
-        toast.error('Invalid magnet link');
-        return false;
-      }
-    } else {
-      toast.error('Input is not a valid magnet link');
+function validateMagnet(magnetLinkOrFile) {
+  if (typeof magnetLinkOrFile === "string") {
+    if (magnetLinkOrFile.startsWith("magnet:?") && !isValidMagnetLink(magnetLinkOrFile)) {
+      toast.error("Invalid magnet link");
       return false;
     }
   }
@@ -24,10 +19,11 @@ function validateInput(magnetLinkOrFile) {
 
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState(null);
-  // TODO Add error toast when debrid fails (wrong api or other reasons)
+  // TODO Add error toast when debrid fails (wrong api or wrong links...)
+  // TODO Update debridResult in real-time as the debrid process progresses
 
     const debrid = (magnetLinkOrFile) => {
-      if (!validateInput(magnetLinkOrFile)) {
+      if (!validateMagnet(magnetLinkOrFile)) {
         return;
       }
 
