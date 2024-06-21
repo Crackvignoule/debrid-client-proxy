@@ -35,6 +35,7 @@ function Home() {
       <Textarea
         label="Links/Magnets"
         placeholder="Enter links/magnets to debrid"
+        isClearable
         onChange={(e) => setLinks(e.target.value)}
         onClear={() => setLinks("")}
         disabled={isLinksDisabled}

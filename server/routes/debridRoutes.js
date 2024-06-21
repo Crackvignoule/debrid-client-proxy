@@ -103,12 +103,10 @@ router.post("/debridLinks", async (req, res) => {
   const { links } = req.body;
   const agent = "myAppName";
   
-  // PHP: $apiEndpoint = "https://api.alldebrid.com/v4/link/unlock?agent=myAppName&apikey=someValidApikeyYouGenerated&link=" . urlencode($link);
   const apiEndpoint = `https://api.alldebrid.com/v4/link/unlock?agent=${agent}&apikey=${apiKey}`;
 
   try {
     const debridedLinks = await Promise.all(links.map(async link => {
-      console.log('Debriding link:', link);
       const response = await axios.get(`${apiEndpoint}&link=${encodeURIComponent(link)}`);
       return response.data;
     }));
@@ -118,7 +116,6 @@ router.post("/debridLinks", async (req, res) => {
     console.error("Error debriding links:", error);
     res.status(500).json({ error: "Failed to debrid links" });
   }
-}
-);
+});
 
 module.exports = router;

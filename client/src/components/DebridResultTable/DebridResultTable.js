@@ -16,8 +16,8 @@ function DebridResultTable({ debridResult }) {
             <td>{index + 1}</td>
             <td>{item.filename}</td>
             <td>
-              <a href={item.debridedLink.data.link}>
-                {item.debridedLink.data.link}
+              <a href={item.debridedLink}>
+                {item.debridedLink}
               </a>
             </td>
           </tr>
