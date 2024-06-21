@@ -5,6 +5,8 @@ import './DebridResultTable.scss';
 function DebridResultTable({ debridResult }) {
   const { saveLink } = useSaveLink();
 
+  // TODO Fix header appearing when there is no result
+  // TODO Add a button to save all links
   return (
     <table>
       <thead>
@@ -26,7 +28,7 @@ function DebridResultTable({ debridResult }) {
               </a>
             </td>
             <td>
-              <button onClick={() => saveLink(item.debridedLink)}>
+              <button onClick={() => saveLink(item.link)}>
                 Save
               </button>
             </td>

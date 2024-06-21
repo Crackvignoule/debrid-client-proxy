@@ -1,12 +1,9 @@
 // TODO Maybe functions shouldnt be here
-// TODO Get rid of some console.logs
 // TODO Global agent and apikey ?
-// TODO magnetortorrent logic different than in input instanceof File or input === 'string'
-// TODO Add support for multiple torrent / magnets debrid
-// TODO Use status live from api to track magnet progress on alldebrid side
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const querystring = require('querystring');
 const path = require('path');
 const fs = require('fs'); // Import the file system module
 const FormData = require('form-data'); // Import the form data module
@@ -115,6 +112,35 @@ router.post("/debridLinks", async (req, res) => {
   catch (error) {
     console.error("Error debriding links:", error);
     res.status(500).json({ error: "Failed to debrid links" });
+  }
+});
+
+router.post("/saveLinks", async (req, res) => {
+  const apiKey = req.headers["api-key"];
+  const { links } = req.body;
+  const agent = "myAppName";
+  const apiEndpoint = "https://api.alldebrid.com/v4/user/links/save";
+
+  try {
+    // Construct query parameters
+    const queryParams = querystring.stringify({
+      agent,
+      apikey: apiKey,
+      'links[]': links.map(link => encodeURIComponent(link)),
+    }, null, null, {
+      encodeURIComponent: str => str // Prevent double encoding
+    });
+
+    // Make the request to the external API
+    const response = await axios.get(`${apiEndpoint}?${queryParams}`, {
+      validateStatus: false // To handle HTTP status code >= 400 similarly to PHP's 'ignore_errors' => true
+    });
+
+    // Assuming the response is JSON and you want to forward it to the client
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error saving links:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
 

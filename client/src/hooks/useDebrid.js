@@ -12,8 +12,6 @@ function isValidMagnetLink(link) {
 
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState([]);
-  // TODO Add error toast when debrid fails (wrong api or wrong links...)
-  // TODO Update debridResult in real-time as the debrid process progresses
 
   const debrid = (linksOrFile) => {
     // Split the input by newline if it's a string
@@ -92,11 +90,13 @@ export function useDebrid() {
     try {
       const response = await axios.post(proxyEndpoint, { links }, { headers });
       const debridedLinks = response.data.debridedLinks;
-      console.log('Debrided Links:', debridedLinks);
-      const result = debridedLinks.map(({ data: { filename, link } }) => ({
-        filename,
-        debridedLink: link,
-      }));
+      const result = debridedLinks.map(
+        ({ data: { filename, link } }, index) => ({
+          filename,
+          link: links[index],
+          debridedLink: link,
+        })
+      );
       return result;
     } catch (error) {
       console.error('Error:', error);

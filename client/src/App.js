@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { NavBar } from './components';
-import { Settings } from './pages';
-import { Home } from './pages';
+import { Home, TorrentProgress, SavedLinks , Settings } from './pages';
 
 function App() {
   return (
@@ -11,6 +10,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/torrent-progress" element={<TorrentProgress />} />
+          <Route path="/saved-links" element={<SavedLinks />} />
         </Routes>
       </div>
     </Router>

@@ -1,10 +1,7 @@
 import { useDropzone } from "react-dropzone";
 import "./FileUpload.scss";
 
-// TODO Fix, still disabled when erasing magnet content with clear button
-// TODO Maybe add a cross to remove the file
 // TODO Add a toaster if user is clicking on disabled input
-// TODO Dim dropzone when disabled
 
 function FileUpload({ file, setFile, disabled }) {
   const { getRootProps, getInputProps } = useDropzone({

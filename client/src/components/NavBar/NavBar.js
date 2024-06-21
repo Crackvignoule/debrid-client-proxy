@@ -10,7 +10,8 @@ function NavBar() {
       </NavLink>
       <div className="navbar__links">
         <NavLink className="navbar__link" to="/">Home</NavLink>
-        <NavLink className="navbar__link" to="/page2">Page 2</NavLink>
+        <NavLink className="navbar__link" to="/torrent-progress">Torrent Progress</NavLink>
+        <NavLink className="navbar__link" to="/saved-links">Saved Links</NavLink>
       </div>
       <NavLink className="navbar__settings" to="/settings">
         <Settings />

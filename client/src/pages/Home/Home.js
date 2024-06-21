@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Input, Textarea, Button } from "@nextui-org/react";
+import { Textarea, Button } from "@nextui-org/react";
 import { FileUpload, DebridResultTable } from "../../components";
 import { useDebrid, useDebridState } from "../../hooks";
 
@@ -32,10 +32,10 @@ function Home() {
       <FileUpload file={file} setFile={setFile} disabled={isFileDisabled} />
 
       {/* TODO Add button to see current supported hosts by AD ? */}
+      {/* TODO Waiting for https://github.com/nextui-org/nextui/issues/2112 */}
       <Textarea
         label="Links/Magnets"
         placeholder="Enter links/magnets to debrid"
-        isClearable
         onChange={(e) => setLinks(e.target.value)}
         onClear={() => setLinks("")}
         isDisabled={isLinksDisabled}
