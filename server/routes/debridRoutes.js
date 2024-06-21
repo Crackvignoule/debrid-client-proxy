@@ -1,8 +1,15 @@
+// TODO Maybe functions shouldnt be here
+// TODO Get rid of some console.logs
+// TODO Global agent and apikey ?
+// TODO magnetortorrent logic different than in input instanceof File or input === 'string'
+// TODO Add support for multiple torrent / magnets debrid
+// TODO Use status live from api to track magnet progress on alldebrid side
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-
 const path = require('path');
+const fs = require('fs'); // Import the file system module
+const FormData = require('form-data'); // Import the form data module
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -15,12 +22,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-// TODO Maybe functions shouldnt be here
-// TODO Get rid of some console.logs
-// TODO Global agent and apikey ?
-// TODO magnetortorrent logic different than in input instanceof File or input === 'string'
-// TODO Add support for multiple torrent / magnets debrid
-// TODO Use status live from api to track magnet progress on alldebrid side
 
 async function getMagnetId(magnetOrTorrent, apiKey) {
   const agent = 'myAppName'; // Replace with your app name
@@ -37,10 +38,11 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
       return null;
     }
   } else {
-    // TODO move imports to the top ?
     // Handle torrent file
-    const fs = require('fs'); // Import the file system module
-    const FormData = require('form-data'); // Import the form data module
+    if (!fs.existsSync(magnetOrTorrent)) {
+      throw new Error('File does not exist');
+    }
+
     const formData = new FormData();
 
     // Append the torrent file to the form data
