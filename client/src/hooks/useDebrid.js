@@ -16,9 +16,12 @@ export function useDebrid() {
   const debrid = (linksOrFile) => {
     // Split the input by newline if it's a string
     const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : [linksOrFile];
-  
+    
+    // Filter out empty lines
+    const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => linkOrFile.trim() !== '');
+
     // Map each link or file to a promise
-    const debridPromises = linksOrFiles.map(linkOrFile => {
+    const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
       if (typeof linkOrFile === 'string' && !isValidMagnetLink(linkOrFile)) {
         // Handle URL
         return debridLinks([linkOrFile])
@@ -103,7 +106,7 @@ export function useDebrid() {
     try {
       const response = await axios.post(proxyEndpoint, { links }, { headers });
       const debridedLinks = response.data.debridedLinks;
-      
+
       const result = debridedLinks.map(({ data: { filename, link } }) => ({
         filename,
         debridedLink: link,
