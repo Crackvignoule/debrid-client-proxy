@@ -18,7 +18,12 @@ export function useDebrid() {
     const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : [linksOrFile];
     
     // Filter out empty lines
-    const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => linkOrFile.trim() !== '');
+    const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => {
+      if (typeof linkOrFile === 'string') {
+        return linkOrFile.trim() !== '';
+      }
+      return true; // Keep the file objects
+    });
 
     // Map each link or file to a promise
     const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
@@ -74,7 +79,6 @@ export function useDebrid() {
 
     try {
       const response = await axios.post('/api/debrid/getMagnetID', data, { headers });
-      console.log("Magnet ID received: ", response.data.id);
       return response.data.id;
     } catch (error) {
       console.error("Error getting magnet ID: ", error);
