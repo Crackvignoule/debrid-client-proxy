@@ -7,36 +7,36 @@ function isValidMagnetLink(link) {
   return magnetURI.test(link);
 }
 
-function validateMagnet(magnetLinkOrFile) {
-  if (typeof magnetLinkOrFile === "string") {
-    if (magnetLinkOrFile.startsWith("magnet:?") && !isValidMagnetLink(magnetLinkOrFile)) {
-      toast.error("Invalid magnet link");
-      return false;
-    }
-  }
-  return true;
-}
 
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState(null);
   // TODO Add error toast when debrid fails (wrong api or wrong links...)
   // TODO Update debridResult in real-time as the debrid process progresses
 
-    const debrid = (magnetLinkOrFile) => {
-      if (!validateMagnet(magnetLinkOrFile)) {
-        return;
-      }
+  const debrid = (linksOrFile) => {
 
-    const debridPromise = getMagnetID(magnetLinkOrFile)
-      .then(magnetID => debridMagnet(magnetID))
-      .then(result => {
-        setDebridResult(result);
-        return result;
-      })
-      .catch(error => {
-        console.error("Error in debrid process: ", error);
-        throw error; // Ensure the error is re-thrown so the toast.promise can catch it
-      });
+    let debridPromise;
+    if (typeof linksOrFile === 'string' && !linksOrFile.startsWith('magnet:?')) {
+      // Handle URL
+      debridPromise = debridLinks([linksOrFile])
+        .then(result => {
+          setDebridResult(result);
+          return result;
+        });
+    } else {
+      // Handle magnet link or file
+      debridPromise = getMagnetID(linksOrFile)
+        .then(magnetID => {
+          if (magnetID === null) {
+            throw new Error('Failed to get magnet ID');
+          }
+          return debridMagnet(magnetID);
+        })
+        .then(result => {
+          setDebridResult(result);
+          return result;
+        });
+    }
   
     toast.promise(
       debridPromise,
@@ -81,15 +81,8 @@ export function useDebrid() {
       const response = await axios.post(proxyEndpoint, { magnetID }, { headers });
       const links = response.data.links;
       const debridedLinks = await debridLinks(links.map(linkObj => linkObj.link));
-
-    const result = links.map((linkObj, index) => {
-      return {
-        filename: linkObj.filename,
-        debridedLink: debridedLinks[index]
-      };
-    });
-
-    return result;
+      
+      return debridedLinks;
   } catch (error) {
     console.error('Error:', error);
   }
@@ -101,8 +94,18 @@ export function useDebrid() {
     const proxyEndpoint = `/api/debrid/debridLinks`;
 
     try {
+      // console.log('Debriding links:', links);
       const response = await axios.post(proxyEndpoint, { links }, { headers });
-      return response.data.debridedLinks;
+      const debridedLinks = response.data.debridedLinks;
+
+      const result = links.map((linkObj, index) => {
+        return {
+          filename: linkObj.filename,
+          debridedLink: debridedLinks[index]
+        };
+      });
+      console.log('Debrided links:', result);
+      return result;
     } catch (error) {
       console.error('Error:', error);
     }

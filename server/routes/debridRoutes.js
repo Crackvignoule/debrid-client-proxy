@@ -70,7 +70,7 @@ router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
   
   if (magnetLink || file) {
     try {
-      console.log('Received magnet link or torrent file:', magnetLink || file.path);
+      // console.log('Received magnet link or torrent file:', magnetLink || file.path);
       const id = await getMagnetId(magnetLink || file.path, apiKey);
       res.json({ id });
     } catch (error) {
@@ -89,7 +89,7 @@ router.post('/getLinksFromMagnet', async (req, res) => {
 
   try {
     const response = await axios.get(apiEndpoint);
-    console.log('Magnet status:', response.data);
+    // console.log('Magnet status:', response.data);
     const links = response.data.data.magnets.links;
     res.json({ links });
   } catch (error) {
@@ -108,6 +108,7 @@ router.post("/debridLinks", async (req, res) => {
 
   try {
     const debridedLinks = await Promise.all(links.map(async link => {
+      console.log('Debriding link:', link);
       const response = await axios.get(`${apiEndpoint}&link=${encodeURIComponent(link)}`);
       return response.data;
     }));

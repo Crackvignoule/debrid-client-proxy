@@ -7,15 +7,11 @@ function Home() {
   // TODO Simplify this big block of usestates by using a single object
   const { 
     file, 
-    setFile, 
-    magnetLink, 
-    setMagnetLink, 
+    setFile,
     links, 
     setLinks, 
     isFileDisabled, 
-    setIsFileDisabled, 
-    isMagnetLinkDisabled, 
-    setIsMagnetLinkDisabled, 
+    setIsFileDisabled,
     isLinksDisabled, 
     setIsLinksDisabled
   } = useDebridState();
@@ -24,10 +20,9 @@ function Home() {
 
 
   useEffect(() => {
-    setIsMagnetLinkDisabled(!!file || !!links);
-    setIsLinksDisabled(!!file || !!magnetLink);
-    setIsFileDisabled(!!magnetLink || !!links);
-  }, [file, magnetLink, links]);
+    setIsLinksDisabled(!!file);
+    setIsFileDisabled(!!links);
+  }, [file, links]);
 
   return (
     <div>
@@ -36,26 +31,17 @@ function Home() {
       {/* TODO Add a check to check valid magnet link */}
       <FileUpload file={file} setFile={setFile} disabled={isFileDisabled} />
 
-      <Input
-        variant="faded"
-        isClearable
-        label="Magnet Link"
-        onChange={(e) => setMagnetLink(e.target.value)}
-        onClear={() => setMagnetLink("")}
-        disabled={isMagnetLinkDisabled}
-      />
-
       {/* TODO Add button to see current supported hosts by AD ? */}
       <Textarea
-        label="Links"
-        placeholder="Enter links to debrid"
+        label="Links/Magnets"
+        placeholder="Enter links/magnets to debrid"
         onChange={(e) => setLinks(e.target.value)}
         onClear={() => setLinks("")}
         disabled={isLinksDisabled}
       />
 
       <Button
-        onClick={() => debrid(magnetLink || file || links)}
+        onClick={() => debrid(file || links)}
         radius="full"
         className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
       >
