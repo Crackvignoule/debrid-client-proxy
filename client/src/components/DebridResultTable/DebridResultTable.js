@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSaveLink } from '../../hooks';
+import './DebridResultTable.scss';
 
 function DebridResultTable({ debridResult }) {
+  const { saveLink } = useSaveLink();
+
   return (
     <table>
       <thead>
@@ -8,6 +12,7 @@ function DebridResultTable({ debridResult }) {
           <th>No.</th>
           <th>Filename</th>
           <th>Debrided Link</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +24,11 @@ function DebridResultTable({ debridResult }) {
               <a href={item.debridedLink}>
                 {item.debridedLink}
               </a>
+            </td>
+            <td>
+              <button onClick={() => saveLink(item.debridedLink)}>
+                Save
+              </button>
             </td>
           </tr>
         ))}

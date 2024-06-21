@@ -38,12 +38,13 @@ function Home() {
         isClearable
         onChange={(e) => setLinks(e.target.value)}
         onClear={() => setLinks("")}
-        disabled={isLinksDisabled}
+        isDisabled={isLinksDisabled}
       />
 
       <Button
         onClick={() => debrid(file || links)}
         radius="full"
+        isDisabled={!file && !links}
         className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
       >
         Debrid

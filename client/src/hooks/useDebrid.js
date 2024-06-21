@@ -1,6 +1,8 @@
 import { toast } from 'react-hot-toast';
 import { useState } from "react";
 import axios from "axios";
+import { getMagnetID } from '../api';
+
 
 function isValidMagnetLink(link) {
   const magnetURI = /^magnet:\?xt=urn:btih:[a-zA-Z0-9]{40,}/;
@@ -63,28 +65,7 @@ export function useDebrid() {
     );
   };
 
-  const getMagnetID = async (input) => {
-    const apiKey = localStorage.getItem("apiKey");
-    let data;
-    let headers = { 'api-key': apiKey };
-
-    if (typeof input === 'string') {
-      // Handle magnet link
-      data = { magnetLink: input };
-    } else {
-      // Handle file
-      data = new FormData();
-      data.append('torrent', input);
-    }
-
-    try {
-      const response = await axios.post('/api/debrid/getMagnetID', data, { headers });
-      return response.data.id;
-    } catch (error) {
-      console.error("Error getting magnet ID: ", error);
-      throw error;
-    }
-  };
+  
 
   const debridMagnet = async (magnetID) => {
     const proxyEndpoint = `/api/debrid/getLinksFromMagnet`;
@@ -92,6 +73,7 @@ export function useDebrid() {
     const headers = { 'api-key': apiKey };
   
     try {
+      console.log(magnetID);
       const response = await axios.post(proxyEndpoint, { magnetID }, { headers });
       const links = response.data.links;
       const debridedLinks = await debridLinks(links.map(linkObj => linkObj.link));
@@ -110,7 +92,7 @@ export function useDebrid() {
     try {
       const response = await axios.post(proxyEndpoint, { links }, { headers });
       const debridedLinks = response.data.debridedLinks;
-
+      console.log('Debrided Links:', debridedLinks);
       const result = debridedLinks.map(({ data: { filename, link } }) => ({
         filename,
         debridedLink: link,
@@ -118,6 +100,7 @@ export function useDebrid() {
       return result;
     } catch (error) {
       console.error('Error:', error);
+      throw error;
     }
   }
 
