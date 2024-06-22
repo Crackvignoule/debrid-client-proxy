@@ -15,12 +15,18 @@ const getMagnetID = async (input) => {
     }
 
     try {
-      const response = await axios.post('/api/debrid/getMagnetID', data, { headers });
+      const response = await axios.post('/api/debrid/getMagnetID', data, { 
+        headers,
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          console.log(`Upload progress: ${percentCompleted}%`);
+        }
+      });
       return response.data.id;
     } catch (error) {
       console.error("Error getting magnet ID: ", error);
       throw error;
     }
-  };
+};
 
 export default getMagnetID;
