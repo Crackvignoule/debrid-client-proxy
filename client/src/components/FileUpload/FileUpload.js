@@ -38,8 +38,8 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
           base: "max-w-md",
           track: "drop-shadow-md",
           indicator: "bg-gradient-to-r from-indigo-500 from-20% via-cerulean via-50% to-turquoise to-90%",
-          label: "tracking-wider font-medium text-default-600",
-          value: "text-foreground/60",
+          label: "tracking-wider font-medium text-cadet-grey",
+          value: "text-cadet-grey",
         }}
         label="Upload Progress"
         value={uploadProgress}

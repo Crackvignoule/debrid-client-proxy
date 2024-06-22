@@ -1,7 +1,8 @@
+// TODO Fix: You could also use Array.map to render the items, but it will not be as performant as using the items and columns prop.
 import React from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { Save } from 'lucide-react';
+import { Save, SaveAll, Download, Copy } from 'lucide-react';
 import { useSaveLinks } from '../../hooks';
 
 function DebridResultTable({ debridResult }) {
@@ -24,21 +25,36 @@ function DebridResultTable({ debridResult }) {
       {debridResult.length > 0 && (
         <>
           <button onClick={handleSaveAllLinks}>Save All Links</button>
-          <Table aria-label="Debrid Results">
+          <Table aria-label="Debrid Results" className="text-cadet-grey">
             <TableHeader columns={columns}>
-              {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+              {(column) => (
+                <TableColumn className='text-rich-black' key={column.key}>{column.label}</TableColumn>
+              )}
             </TableHeader>
-            <TableBody items={debridResult.map((item, index) => ({ ...item, no: index + 1, action: "Save" }))}>
+            <TableBody
+              items={debridResult.map((item, index) => ({
+                ...item,
+                no: index + 1,
+                action: "Save",
+              }))}
+            >
               {(item) => (
                 <TableRow key={item.no}>
                   {(columnKey) => (
                     <TableCell>
                       {columnKey === "action" ? (
-                        <Button auto size="mini" icon={<Save />} onClick={() => saveLinks([item.link])}>
-                          Save
+                        <Button
+                          isIconOnly
+                          auto
+                          onClick={() => saveLinks([item.link])}
+                          className='bg-cadet-grey'
+                        >
+                          <Save />
                         </Button>
                       ) : columnKey === "debridedLink" ? (
-                        <a href={getKeyValue(item, columnKey)}>{getKeyValue(item, columnKey)}</a>
+                        <a href={getKeyValue(item, columnKey)}>
+                          {getKeyValue(item, columnKey)}
+                        </a>
                       ) : (
                         getKeyValue(item, columnKey)
                       )}

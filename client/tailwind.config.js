@@ -15,6 +15,9 @@ module.exports = {
         'cerulean': '#2c7da0ff',
         'turquoise': '#63e7d8ff',
         'azure-web': '#f5feffff',
+        'cadet-grey': '#99b3b6ff',
+        'rich-black': '#000e18ff',
+        'rich-black-2': '#001524ff',
       },
       backgroundImage: {
         'gradient-top': 'linear-gradient(0deg, #001b30ff, #012a4aff, #013a63ff, #014f86ff, #2c7da0ff, #63e7d8ff, #f5feffff)',
@@ -38,7 +41,10 @@ module.exports = {
       themes: {
         light: {
           colors: {
+            content1: "#001524ff",
+
             default: {
+              // 50:  "#18181B",
               100: "#99b3b6ff",
               300: "#6e8e91ff",
               500: "#3b6065ff",
