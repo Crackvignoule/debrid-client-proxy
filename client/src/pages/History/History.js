@@ -1,10 +1,10 @@
 // TODO Use status live from api to track magnet progress on alldebrid side
-function TorrentProgress() {
+function History() {
     return (
       <div>
-        <h1>Torrent Progress</h1>
+        <h1>History</h1>
       </div>
     );
   }
   
-  export default TorrentProgress;
+  export default History;
