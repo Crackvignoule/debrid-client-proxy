@@ -1,11 +1,12 @@
 import { useDropzone } from "react-dropzone";
 import { Progress } from "@nextui-org/react";
+import { Upload } from 'lucide-react';
 import "./FileUpload.scss";
 
 // TODO Add a toaster if user is clicking on disabled input
 
 function FileUpload({ file, setFile, disabled, uploadProgress }) {
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       "application/x-bittorrent": [".torrent"],
     },
@@ -16,14 +17,18 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
     disabled
   });
 
+  // Conditional class or style
+  const dropzoneClass = `file-upload ${disabled ? "disabled" : ""} ${isDragActive ? "hover-style" : ""}`;
+
   return (
     <div>
       <div
-        className={`file-upload ${disabled ? "disabled" : ""}`}
+        className={dropzoneClass}
         {...getRootProps()}
       >
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <input {...getInputProps(dropzoneClass)} />
+        <Upload size={24} />
+        <p>Upload File</p>
         {file && <p>Selected file: {file.name}</p>}
       </div>
       <Progress
@@ -31,8 +36,8 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
         radius="sm"
         classNames={{
           base: "max-w-md",
-          track: "drop-shadow-md border border-default",
-          indicator: "bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%",
+          track: "drop-shadow-md",
+          indicator: "bg-gradient-to-r from-indigo-500 from-20% via-cerulean via-50% to-turquoise to-90%",
           label: "tracking-wider font-medium text-default-600",
           value: "text-foreground/60",
         }}

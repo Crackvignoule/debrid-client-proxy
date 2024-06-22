@@ -21,7 +21,7 @@ function Home() {
   useEffect(() => {
     setIsLinksDisabled(!!file);
     setIsFileDisabled(!!links);
-  }, [file, links]);
+  }, [file, links, setIsFileDisabled, setIsLinksDisabled]);
 
   return (
     <div className="container">
@@ -41,6 +41,7 @@ function Home() {
             onChange={(e) => setLinks(e.target.value)}
             onClear={() => setLinks("")}
             isDisabled={isLinksDisabled}
+            minRows={6}
           />
         </div>
       </div>
@@ -49,7 +50,7 @@ function Home() {
           onClick={() => debrid(file || links)}
           radius="full"
           isDisabled={!file && !links}
-          className="relative inline-block px-4 py-2 font-medium text-white rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-in-out hover:rotate-gradient"
+          className="bg-gradient-to-tr from-indigo-500 from-10% via-cerulean via-50% to-turquoise to-90%"
         >
           Debrid
         </Button>

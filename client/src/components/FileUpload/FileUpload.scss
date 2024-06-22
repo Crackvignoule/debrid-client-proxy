@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .file-upload {
     width: 330px;
     height: 150px;
@@ -8,9 +10,9 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-    color: #EB6473;
-    background-color: #3a3a3a;
-    border: 1.5px dashed #EB6473;
+    color: $rich-black;
+    background-color: $cadet-gray;
+    border: 1.5px dashed $rich-black;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -32,3 +34,8 @@
         border-color: #ff1744;
     }
 }
+
+.file-upload.hover-style {
+    background-color: rgba($azure-web, 0.5);
+    border: 2px dashed $rich-black;
+  }

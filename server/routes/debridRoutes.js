@@ -1,4 +1,5 @@
 // TODO Maybe functions shouldnt be here
+// TODO Temp file ? Or delete after use ?
 // TODO Global agent and apikey ?
 const express = require('express');
 const router = express.Router();

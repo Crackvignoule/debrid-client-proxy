@@ -31,7 +31,7 @@ function Settings() {
       <Button
         onClick={CheckValidity}
         radius="full"
-        className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+        className="bg-gradient-to-tr from-indigo-500 from-10% via-cerulean via-50% to-turquoise to-90%"
       >
         Check validity
       </Button>
