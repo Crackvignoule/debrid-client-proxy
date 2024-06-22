@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Textarea, Button } from "@nextui-org/react";
 import { FileUpload, DebridResultTable } from "../../components";
 import { useDebrid, useDebridState } from "../../hooks";
+import "./Home.scss";
 
 function Home() {
   const { 
@@ -42,8 +43,10 @@ function Home() {
         onClick={() => debrid(file || links)}
         radius="full"
         isDisabled={!file && !links}
-        className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-      >
+        // bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg 
+        // bg-gradient-to-r from-green-400 to-blue-500
+        className="relative inline-block px-4 py-2 font-medium text-white rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-in-out hover:rotate-gradient" 
+  >
         Debrid
       </Button>
 

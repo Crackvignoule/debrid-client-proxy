@@ -1,3 +1,31 @@
+/* SCSS HEX, HSL, RGB, and Gradient Variables */
+$oxford-blue: #001b30ff;
+$prussian-blue: #012a4aff;
+$indigo-dye: #013a63ff;
+$indigo-dye-2: #014f86ff;
+$cerulean: #2c7da0ff;
+$turquoise: #63e7d8ff;
+$azure-web: #f5feffff;
+
+$oxford-blue-hsl: hsla(206, 100%, 9%, 1);
+$prussian-blue-hsl: hsla(206, 97%, 15%, 1);
+$indigo-dye-hsl: hsla(205, 98%, 20%, 1);
+$indigo-dye-2-hsl: hsla(205, 99%, 26%, 1);
+$cerulean-hsl: hsla(198, 57%, 40%, 1);
+$turquoise-hsl: hsla(173, 73%, 65%, 1);
+$azure-web-hsl: hsla(186, 100%, 98%, 1);
+
+$oxford-blue-rgba: rgba(0, 27, 48, 1);
+$prussian-blue-rgba: rgba(1, 42, 74, 1);
+$indigo-dye-rgba: rgba(1, 58, 99, 1);
+$indigo-dye-2-rgba: rgba(1, 79, 134, 1);
+$cerulean-rgba: rgba(44, 125, 160, 1);
+$turquoise-rgba: rgba(99, 231, 216, 1);
+$azure-web-rgba: rgba(245, 254, 255, 1);
+
+$gradient-top: linear-gradient(0deg, #001b30ff, #012a4aff, #013a63ff, #014f86ff, #2c7da0ff, #63e7d8ff, #f5feffff);
+$gradient-right: linear-gradient(90deg, #001b30ff, #012a4aff, #013a63ff, #014f86ff, #2c7da0ff, #63e7d8ff, #f5feffff);
+
 @tailwind base;
 
 // @layer base {

@@ -32,7 +32,7 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
         classNames={{
           base: "max-w-md",
           track: "drop-shadow-md border border-default",
-          indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+          indicator: "bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%",
           label: "tracking-wider font-medium text-default-600",
           value: "text-foreground/60",
         }}

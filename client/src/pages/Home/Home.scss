@@ -1,0 +1,23 @@
+// @keyframes rotateGradient {
+//     0% {
+//       background-position: 0% 50%;
+//     }
+//     50% {
+//       background-position: 100% 50%;
+//     }
+//     100% {
+//       background-position: 200% 50%; // Ends at a position that visually matches the start
+//     }
+//   }
+  
+//   .rotate-gradient {
+//     position: relative;
+//     overflow: hidden;
+//     background: linear-gradient(90deg, rgba(16,185,129,1) 0%, rgba(59,130,246,1) 25%, rgba(16,185,129,1) 50%);
+//     background-size: 200% 200%;
+//     transition: background 2s ease;
+  
+//     &:hover {
+//       animation: rotateGradient 4s ease infinite; // Adjusted duration for the new keyframe setup
+//     }
+//   }
