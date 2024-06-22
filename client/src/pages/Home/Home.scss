@@ -21,3 +21,33 @@
 //       animation: rotateGradient 4s ease infinite; // Adjusted duration for the new keyframe setup
 //     }
 //   }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: auto;
+    margin-top: 2%;
+}
+  
+.inputs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem; /* Adjust the gap as needed, now using rems */
+    width: 90%; /* Adjust based on your layout, now using percentage */
+    margin-bottom: 2rem; /* Space between inputs and button, now using rems */
+  }
+  
+.file-upload-container, .textarea-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Ensures the button is centered in the container */
+}

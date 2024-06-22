@@ -24,32 +24,36 @@ function Home() {
   }, [file, links]);
 
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the home page.</p>
-      <FileUpload file={file} setFile={setFile} disabled={isFileDisabled} uploadProgress={uploadProgress} />
-
-      {/* TODO Add button to see current supported hosts by AD ? */}
-      {/* TODO Waiting for https://github.com/nextui-org/nextui/issues/2112 */}
-      <Textarea
-        label="Links/Magnets"
-        placeholder="Enter links/magnets to debrid"
-        onChange={(e) => setLinks(e.target.value)}
-        onClear={() => setLinks("")}
-        isDisabled={isLinksDisabled}
-      />
-
-      <Button
-        onClick={() => debrid(file || links)}
-        radius="full"
-        isDisabled={!file && !links}
-        // bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg 
-        // bg-gradient-to-r from-green-400 to-blue-500
-        className="relative inline-block px-4 py-2 font-medium text-white rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-in-out hover:rotate-gradient" 
-  >
-        Debrid
-      </Button>
-
+    <div className="container">
+      <div className="inputs-container">
+        <div className="file-upload-container">
+          <FileUpload
+            file={file}
+            setFile={setFile}
+            disabled={isFileDisabled}
+            uploadProgress={uploadProgress}
+          />
+        </div>
+        <div className="textarea-container">
+          <Textarea
+            label="Links/Magnets"
+            placeholder="Enter links/magnets to debrid"
+            onChange={(e) => setLinks(e.target.value)}
+            onClear={() => setLinks("")}
+            isDisabled={isLinksDisabled}
+          />
+        </div>
+      </div>
+      <div className="button-container">
+        <Button
+          onClick={() => debrid(file || links)}
+          radius="full"
+          isDisabled={!file && !links}
+          className="relative inline-block px-4 py-2 font-medium text-white rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-in-out hover:rotate-gradient"
+        >
+          Debrid
+        </Button>
+      </div>
       {debridResult && <DebridResultTable debridResult={debridResult} />}
     </div>
   );
