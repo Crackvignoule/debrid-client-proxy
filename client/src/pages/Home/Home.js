@@ -4,7 +4,6 @@ import { FileUpload, DebridResultTable } from "../../components";
 import { useDebrid, useDebridState } from "../../hooks";
 
 function Home() {
-  // TODO Simplify this big block of usestates by using a single object
   const { 
     file, 
     setFile,
@@ -15,8 +14,7 @@ function Home() {
     isLinksDisabled, 
     setIsLinksDisabled
   } = useDebridState();
-  const { debrid, debridResult } = useDebrid();
-
+  const { debrid, debridResult, uploadProgress } = useDebrid();
 
 
   useEffect(() => {
@@ -28,8 +26,7 @@ function Home() {
     <div>
       <h1>Welcome to the Home Page</h1>
       <p>This is the home page.</p>
-      {/* TODO Add a check to check valid magnet link */}
-      <FileUpload file={file} setFile={setFile} disabled={isFileDisabled} />
+      <FileUpload file={file} setFile={setFile} disabled={isFileDisabled} uploadProgress={uploadProgress} />
 
       {/* TODO Add button to see current supported hosts by AD ? */}
       {/* TODO Waiting for https://github.com/nextui-org/nextui/issues/2112 */}

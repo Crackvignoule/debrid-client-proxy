@@ -11,31 +11,36 @@ function isValidMagnetLink(link) {
 
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const debrid = (linksOrFile) => {
-    // Split the input by newline if it's a string
+    // Splint links by newline + Filter out empty newlines
     const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : [linksOrFile];
-    
-    // Filter out empty lines
     const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => {
       if (typeof linkOrFile === 'string') {
         return linkOrFile.trim() !== '';
       }
-      return true; // Keep the file objects
+      return true; // file path doesnt need to be filtered
     });
 
-    // Map each link or file to a promise
+    // Debrid each link or file (mapping each to a promise)
     const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
+      // If its a link
       if (typeof linkOrFile === 'string' && !isValidMagnetLink(linkOrFile)) {
-        // Handle URL
         return debridLinks([linkOrFile])
           .then(result => {
             setDebridResult(prevResult => [...prevResult, ...result]);
             return result;
           });
       } else {
-        // Handle magnet link or file
-        return getMagnetID(linkOrFile)
+        // If its a file, track upload progress
+        const isFile = !(typeof linkOrFile === 'string');
+        const onProgress = isFile ? (progress) => {
+          setUploadProgress(progress);
+        } : undefined;
+
+        // Get magnet ID and debrid
+        return getMagnetID(linkOrFile, onProgress) // Pass onProgress only if it's a file
           .then(magnetID => {
             if (magnetID === null) {
               throw new Error('Failed to get magnet ID');
@@ -62,5 +67,5 @@ export function useDebrid() {
     );
   };
 
-  return { debrid, debridResult };
+  return { debrid, debridResult, uploadProgress };
 }

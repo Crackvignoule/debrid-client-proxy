@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getMagnetID = async (input) => {
+const getMagnetID = async (input, onProgress) => {
     const apiKey = localStorage.getItem("apiKey");
     let data;
     let headers = { 'api-key': apiKey };
@@ -19,7 +19,10 @@ const getMagnetID = async (input) => {
         headers,
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          console.log(`Upload progress: ${percentCompleted}%`);
+          // Optional callback to track progress
+          if (onProgress) {
+            onProgress(percentCompleted);
+          }
         }
       });
       return response.data.id;

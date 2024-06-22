@@ -1,9 +1,10 @@
 import { useDropzone } from "react-dropzone";
+import { Progress } from "@nextui-org/react";
 import "./FileUpload.scss";
 
 // TODO Add a toaster if user is clicking on disabled input
 
-function FileUpload({ file, setFile, disabled }) {
+function FileUpload({ file, setFile, disabled, uploadProgress }) {
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/x-bittorrent": [".torrent"],
@@ -17,11 +18,28 @@ function FileUpload({ file, setFile, disabled }) {
 
   return (
     <div>
-      <div className={`file-upload ${disabled ? 'disabled' : ''}`} {...getRootProps()}>
+      <div
+        className={`file-upload ${disabled ? "disabled" : ""}`}
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
         {file && <p>Selected file: {file.name}</p>}
       </div>
+      <Progress
+        size="sm"
+        radius="sm"
+        classNames={{
+          base: "max-w-md",
+          track: "drop-shadow-md border border-default",
+          indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+          label: "tracking-wider font-medium text-default-600",
+          value: "text-foreground/60",
+        }}
+        label="Upload Progress"
+        value={uploadProgress}
+        showValueLabel={true}
+      />
     </div>
   );
 }
