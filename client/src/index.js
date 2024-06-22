@@ -8,7 +8,7 @@ import "./index.scss";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <NextUIProvider>
-      <main className="dark text-foreground bg-background">
+      <main className="dark text-foreground ">
         <Toaster />
         <App />
       </main>
