@@ -35,9 +35,9 @@
 .inputs-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem; /* Adjust the gap as needed, now using rems */
-    width: 90%; /* Adjust based on your layout, now using percentage */
-    margin-bottom: 2rem; /* Space between inputs and button, now using rems */
+    gap: 2rem;
+    width: 90%;
+    margin-bottom: 2rem;
   }
   
 .file-upload-container, .textarea-container {
@@ -49,5 +49,5 @@
 .button-container {
   display: flex;
   justify-content: center;
-  width: 100%; /* Ensures the button is centered in the container */
+  width: 100%;
 }

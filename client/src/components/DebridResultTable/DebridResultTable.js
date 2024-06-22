@@ -1,41 +1,48 @@
 import React from 'react';
-import { useSaveLink } from '../../hooks';
+import { useSaveLinks } from '../../hooks';
 import './DebridResultTable.scss';
 
 function DebridResultTable({ debridResult }) {
-  const { saveLink } = useSaveLink();
+  const { saveLinks } = useSaveLinks();
 
   // TODO Fix header appearing when there is no result
-  // TODO Add a button to save all links
+  const handleSaveAllLinks = () => {
+    const allLinks = debridResult.map(item => item.link);
+    saveLinks(allLinks);
+  };
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Filename</th>
-          <th>Debrided Link</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {debridResult.map((item, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{item.filename}</td>
-            <td>
-              <a href={item.debridedLink}>
-                {item.debridedLink}
-              </a>
-            </td>
-            <td>
-              <button onClick={() => saveLink(item.link)}>
-                Save
-              </button>
-            </td>
+    <>
+      <button onClick={handleSaveAllLinks}>Save All Links</button>
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Filename</th>
+            <th>Debrided Link</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {debridResult.map((item, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item.filename}</td>
+              <td>
+                <a href={item.debridedLink}>
+                  {item.debridedLink}
+                </a>
+              </td>
+              <td>
+                <button onClick={() => saveLinks([item.link])}>
+                  Save
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
 

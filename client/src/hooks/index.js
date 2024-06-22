@@ -2,6 +2,6 @@
 import useApiKey from "./useApiKey";
 import { useDebrid } from "./useDebrid";
 import useDebridState from "./useDebridState";
-import useSaveLink from "./useSaveLink";
+import useSaveLinks from "./useSaveLinks";
 
-export { useApiKey, useDebrid, useDebridState, useSaveLink };
+export { useApiKey, useDebrid, useDebridState, useSaveLinks };

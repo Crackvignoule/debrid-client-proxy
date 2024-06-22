@@ -1,10 +1,10 @@
-import { saveLinks } from "../api";
+import { saveLinks as apiSaveLinks } from "../api"; // Renamed imported function
 import { toast } from 'react-hot-toast';
 
-const useSaveLink = () => {
-    const saveLink = (link) => {
+const useSaveLinks = () => {
+    const saveLinks = (links) => {
         return toast.promise(
-            saveLinks([link]),
+            apiSaveLinks(links), // Use the renamed imported function
             {
                 loading: 'Saving link...',
                 success: <b>Link saved successfully!</b>,
@@ -13,7 +13,7 @@ const useSaveLink = () => {
         );
     }
 
-    return { saveLink };
+    return { saveLinks };
 }
 
-export default useSaveLink;
+export default useSaveLinks;
