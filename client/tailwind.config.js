@@ -41,7 +41,12 @@ module.exports = {
       themes: {
         light: {
           colors: {
+            foreground: "#4b494c",
             content1: "#001524ff",
+
+            primary: {
+              foreground: "#000e18ff",
+            },
 
             default: {
               // 50:  "#18181B",
