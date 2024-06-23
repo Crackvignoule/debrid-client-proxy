@@ -16,5 +16,11 @@ COPY server/ ./
 # Change working directory back to /usr/src/app before copying the client build
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/build ./client/build
+
+# Add a script to update the PUBLIC_URL in static files if needed
+COPY update-prefix-url.sh /usr/src/app/update-prefix-url.sh
+RUN chmod +x /usr/src/app/update-prefix-url.sh
+
 EXPOSE 5000
-CMD [ "node", "server/server.js" ]
+
+CMD ["/bin/sh", "-c", "/usr/src/app/update-prefix-url.sh && node server/server.js"]

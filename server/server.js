@@ -1,22 +1,32 @@
-const express = require('express');
-const path = require('path');
-const apiRoutes = require('./routes/api');
+const express = require("express");
+const path = require("path");
+const apiRoutes = require("./routes/api");
 const app = express();
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
+let PrefixUrl = "";
+
+// serve ../client/build/static as /static
+app.use(
+  "/static",
+  express.static(path.join(__dirname, "../client/build/static"))
+);
+
+// serve ../client/build/lo
+
+// Serve static files from the React app with PrefixUrl prefix
+app.use(PrefixUrl, express.static(path.join(__dirname, "../client/build")));
 
 // Parse incoming requests data
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); 
+app.use(express.json());
 
-// Use api routes
-app.use('/api', apiRoutes);
+// Use api routes with PrefixUrl prefix
+app.use(`${PrefixUrl}/api`, apiRoutes); // Now safe from double slashes
 
 // The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// match one above, send back React's index.html file, considering PrefixUrl.
+app.get(`${PrefixUrl}/*`, (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 const port = process.env.PORT || 5000;

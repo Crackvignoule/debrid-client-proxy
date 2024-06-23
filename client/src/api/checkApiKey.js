@@ -1,8 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
+
+const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
 
 const checkApiKey = async (key) => {
   try {
-    const response = await axios.get(`/api/checkApiKey/${key}`);
+    const response = await axios.get(`${PrefixUrl}/api/checkApiKey/${key}`);
     const res = response.data;
     if (!res.isValid) {
       throw new Error("API key is invalid");

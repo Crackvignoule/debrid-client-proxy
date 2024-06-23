@@ -1,10 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { NavBar } from './components';
-import { Home, PendingTorrents, SavedLinks, History, Settings } from './pages';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NavBar } from "./components";
+import { Home, PendingTorrents, SavedLinks, History, Settings } from "./pages";
+
+const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
 
 function App() {
   return (
-    <Router>
+    <Router basename={PrefixUrl}>
       <div className="App">
         <NavBar />
         <Routes>
