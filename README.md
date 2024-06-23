@@ -9,9 +9,9 @@ TODO
 
 ### Docker Compose
 
-```yaml
-version: '3.7'
+1. **Create a `docker-compose.yml` file** with the following content:
 
+```yaml
 services:
   debridclientproxy:
     image: kipavy/debridclientproxy
