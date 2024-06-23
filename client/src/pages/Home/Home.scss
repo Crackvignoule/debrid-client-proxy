@@ -29,6 +29,7 @@
   width: 100%;
 }
 
+// TODO Waiting for Firefox to add CSS Houdini https://caniuse.com/?search=Houdini, working in Chrome
 @property --rotate {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -56,7 +57,8 @@
     content: '';
     position: absolute;
     z-index: -1;
-    background-image: linear-gradient(var(--rotate), #6366f1 10%, #2c7da0 50%, #63e7d8 90%);    background-size: 200% 200%;
+    background-image: linear-gradient(var(--rotate), #6366f1 10%, #2c7da0 50%, #63e7d8 90%);
+    background-size: 200% 200%;
     background-position: center;
     animation: spin 4s linear infinite;
   }
