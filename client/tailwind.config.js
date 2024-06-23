@@ -41,26 +41,15 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            foreground: "#4b494c",
+            foreground: "#4b494c", // color of textarea hint
             content1: "#001524ff",
-
-            primary: {
-              foreground: "#000e18ff",
-            },
-
             default: {
-              // 50:  "#18181B",
+              foreground: "#000e18ff", // color of textarea input
               100: "#99b3b6ff",
               300: "#6e8e91ff",
               500: "#3b6065ff",
               600: "#000e18ff",
             },
-            // base: {
-            //   default: "#FF0000",
-            // },
-            // content4: {
-            //   default: "#FF0000",
-            // },
           },
         },
       },
