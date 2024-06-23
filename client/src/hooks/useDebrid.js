@@ -80,13 +80,14 @@ export function useDebrid() {
                 <div>
                   ⏳ A Torrent is Pending...
                   <Button
+                    className="ml-1 min-w-0 min-h-0 h-8 w-8" //p-0 text-xs inline-flex items-center justify-center
                     isIconOnly
                     onClick={() => {
                       navigate("/pending-torrents");
                       toast.dismiss(t.id); // Optionally dismiss the toast on click
                     }}
                   >
-                    <ExternalLink size={2} />
+                    <ExternalLink size={20}/>
                   </Button>
                 </div>
               ));
