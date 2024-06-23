@@ -21,7 +21,9 @@ services:
       - URL_PREFIX=/debrid
 ```
 
-Note: URL_PREFIX is optional, it is used to prefix the routes of the proxy. Example: Instead of `http://localhost:5000/` it will be `http://localhost:5000/debrid/`
+Now you can open http://localhost/debrid in your browser.
+
+Note: URL_PREFIX is optional, it is used to prefix the routes of the proxy. Example: Instead of `http://localhost/` it will be `http://localhost/debrid/`
 
 ```bash
 docker-compose up -d
@@ -30,7 +32,7 @@ docker-compose up -d
 ### Docker Run
 
 ```bash
-docker run -dit -p 5000:5000 -e URL_PREFIX=/debrid kipavy/debridclientproxy
+docker run -dit -p 80:5000 -e URL_PREFIX=/debrid kipavy/debridclientproxy
 ```
 
 ## Testing Docker
