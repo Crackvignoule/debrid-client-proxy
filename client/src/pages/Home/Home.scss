@@ -16,7 +16,8 @@
     margin-bottom: 2rem;
   }
   
-.file-upload-container, .textarea-container {
+.file-upload-container,
+.textarea-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,15 +29,18 @@
   width: 100%;
 }
 
-@keyframes movingGradient {
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    --rotate: 0deg;
   }
   100% {
-    background-position: 0% 50%;
+    --rotate: 360deg;
   }
 }
 
@@ -46,15 +50,15 @@
   padding: 5px;
   border-radius: 12px;
   $border-offset: 0px; // SCSS variables should be declared at the top of your SCSS file or outside of any selector
-  $blur-offset: 10px;
+  $blur-offset: 5px;
 
   &:hover:before, &:hover:after {
     content: '';
     position: absolute;
     z-index: -1;
-    background: linear-gradient(132deg, #6366f1 10%, #2c7da0 50%, #63e7d8 90%);
-    background-size: 200% 200%;
-    animation: movingGradient 4s linear infinite;
+    background-image: linear-gradient(var(--rotate), #6366f1 10%, #2c7da0 50%, #63e7d8 90%);    background-size: 200% 200%;
+    background-position: center;
+    animation: spin 4s linear infinite;
   }
 
   &:hover:before {
