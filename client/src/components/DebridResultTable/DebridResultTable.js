@@ -24,11 +24,19 @@ function DebridResultTable({ debridResult }) {
     <>
       {debridResult.length > 0 && (
         <>
-          <button onClick={handleSaveAllLinks}>Save All Links</button>
+          <Button
+            isIconOnly
+            onClick={() => handleSaveAllLinks()}
+            className="bg-cadet-grey"
+          >
+            <Save />
+          </Button>
           <Table aria-label="Debrid Results" className="text-cadet-grey">
             <TableHeader columns={columns}>
               {(column) => (
-                <TableColumn className='text-rich-black' key={column.key}>{column.label}</TableColumn>
+                <TableColumn className="text-rich-black" key={column.key}>
+                  {column.label}
+                </TableColumn>
               )}
             </TableHeader>
             <TableBody
@@ -45,9 +53,8 @@ function DebridResultTable({ debridResult }) {
                       {columnKey === "action" ? (
                         <Button
                           isIconOnly
-                          auto
                           onClick={() => saveLinks([item.link])}
-                          className='bg-cadet-grey'
+                          className="bg-cadet-grey"
                         >
                           <Save />
                         </Button>

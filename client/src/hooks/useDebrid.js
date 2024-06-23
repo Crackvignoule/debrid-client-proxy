@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { getMagnetID, debridLinks, debridMagnet } from '../api';
+import { Button } from "@nextui-org/react";
 
 
 function isValidMagnetLink(link) {
@@ -8,24 +11,24 @@ function isValidMagnetLink(link) {
   return magnetURI.test(link);
 }
 
-
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
-
+  const navigate = useNavigate();
+  
   const debrid = (linksOrFile) => {
-    // Splint links by newline + Filter out empty newlines
+    // Split links by newline + Filter out empty newlines
     const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : [linksOrFile];
     const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => {
       if (typeof linkOrFile === 'string') {
         return linkOrFile.trim() !== '';
       }
-      return true; // file path doesnt need to be filtered
+      return true; // file path doesn't need to be filtered
     });
 
     // Debrid each link or file (mapping each to a promise)
     const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
-      // If its a link
+      // If it's a link
       if (typeof linkOrFile === 'string' && !isValidMagnetLink(linkOrFile)) {
         return debridLinks([linkOrFile])
           .then(result => {
@@ -33,7 +36,7 @@ export function useDebrid() {
             return result;
           });
       } else {
-        // If its a file, track upload progress
+        // If it's a file, track upload progress
         const isFile = !(typeof linkOrFile === 'string');
         const onProgress = isFile ? (progress) => {
           setUploadProgress(progress);
@@ -48,8 +51,50 @@ export function useDebrid() {
             return debridMagnet(magnetID);
           })
           .then(result => {
-            setDebridResult(prevResult => [...prevResult, ...result]);
-            return result;
+            if (result.isPending) {
+              // toast.custom(t => (
+              //   <div>
+              //     <ToastBar toast={t}>
+              //       {/* Default content */}
+              //       <span>A Torrent is Pending...</span>
+              //     </ToastBar>
+              //     <button onClick={() => {
+              //       navigate('/pending-torrents');
+              //       toast.dismiss(t.id); // Optionally dismiss the toast on click
+              //     }}>
+              //       Go to Pending Torrents
+              //     </button>
+              //   </div>
+              // ), {
+              //   icon: '⏳',
+              // });
+              // return result;  // Resolve the promise even if pending
+              // toast.custom((t) => (
+              //   <div
+              //     className={`bg-white px-6 py-4 shadow-md rounded-full`}
+              //   >
+              //     Hello World
+              //   </div>
+              // ));
+              toast((t) => (
+                <div>
+                  ⏳ A Torrent is Pending...
+                  <Button
+                    isIconOnly
+                    onClick={() => {
+                      navigate("/pending-torrents");
+                      toast.dismiss(t.id); // Optionally dismiss the toast on click
+                    }}
+                  >
+                    <ExternalLink size={2} />
+                  </Button>
+                </div>
+              ));
+              return result;
+            } else {
+              setDebridResult(prevResult => [...prevResult, ...result]);
+              return result;
+            }
           });
       }
     });

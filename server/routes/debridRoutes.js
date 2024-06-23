@@ -89,7 +89,8 @@ router.post('/getLinksFromMagnet', async (req, res) => {
     const response = await axios.get(apiEndpoint);
     // console.log('Magnet status:', response.data);
     const links = response.data.data.magnets.links;
-    res.json({ links });
+    const statusCode = response.data.data.magnets.statusCode
+    res.json({ links, statusCode });
   } catch (error) {
     console.error('Failed to get magnet link status', error);
     res.status(500).json({ error: 'Failed to get magnet link status' });
