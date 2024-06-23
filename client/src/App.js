@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavBar } from "./components";
 import { Home, PendingTorrents, SavedLinks, History, Settings } from "./pages";
 
-const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
+const PrefixUrl = window.RUNTIME_CONFIG.URL_PREFIX;
 
 function App() {
   return (

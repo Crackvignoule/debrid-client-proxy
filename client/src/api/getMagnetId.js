@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getMagnetID = async (input, onProgress) => {
-  const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
+  const PrefixUrl = window.RUNTIME_CONFIG.URL_PREFIX;
   const apiKey = localStorage.getItem("apiKey");
   let data;
   let headers = { "api-key": apiKey };

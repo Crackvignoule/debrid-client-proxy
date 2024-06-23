@@ -5,14 +5,6 @@ const app = express();
 
 let PrefixUrl = "";
 
-// serve ../client/build/static as /static
-app.use(
-  "/static",
-  express.static(path.join(__dirname, "../client/build/static"))
-);
-
-// serve ../client/build/lo
-
 // Serve static files from the React app with PrefixUrl prefix
 app.use(PrefixUrl, express.static(path.join(__dirname, "../client/build")));
 

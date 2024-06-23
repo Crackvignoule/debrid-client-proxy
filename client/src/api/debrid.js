@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
+const PrefixUrl = window.RUNTIME_CONFIG.URL_PREFIX;
 
 export const debridMagnet = async (magnetID) => {
   const proxyEndpoint = `${PrefixUrl}/api/debrid/getLinksFromMagnet`;

@@ -1,3 +1,3 @@
 window.RUNTIME_CONFIG = {
-    PREFIX_URL: ""
-  };
+  URL_PREFIX: "",
+};

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PrefixUrl = window.RUNTIME_CONFIG.PREFIX_URL;
+const PrefixUrl = window.RUNTIME_CONFIG.URL_PREFIX;
 
 const checkApiKey = async (key) => {
   try {
