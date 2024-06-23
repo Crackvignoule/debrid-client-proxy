@@ -41,7 +41,8 @@ function Home() {
             onChange={(e) => setLinks(e.target.value)}
             onClear={() => setLinks("")}
             isDisabled={isLinksDisabled}
-            minRows={6}
+            minRows={7}
+            maxRows={7}
           />
         </div>
       </div>
