@@ -28,7 +28,6 @@
   width: 100%;
 }
 
-/* Step 2: Define keyframes for the moving gradient */
 @keyframes movingGradient {
   0% {
     background-position: 0% 50%;
@@ -41,24 +40,40 @@
   }
 }
 
-/* Adjusted styles for .textarea-container to ensure borders are visible */
 .textarea-container {
   position: relative;
-  overflow: hidden; /* Change to visible to ensure borders are not cut off */
-  padding: 5px; /* Add padding to accommodate the border */
-  border-radius: 12px; /* Add border-radius to match the ::before pseudo-element */
+  overflow: visible; /* Ensure the extended blurred border is visible */
+  padding: 5px;
+  border-radius: 12px;
+  $border-offset: 0px; // SCSS variables should be declared at the top of your SCSS file or outside of any selector
+  $blur-offset: 10px;
 
-  &:hover:before {
+  &:hover:before, &:hover:after {
     content: '';
     position: absolute;
-    top: -5px; /* Adjust these values to ensure the border is visible */
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
     z-index: -1;
     background: linear-gradient(132deg, #6366f1 10%, #2c7da0 50%, #63e7d8 90%);
     background-size: 200% 200%;
     animation: movingGradient 4s linear infinite;
-    // border-radius: 12px; /* Ensure this matches or exceeds the textarea's border-radius */
+  }
+
+  &:hover:before {
+    top: -$border-offset;
+    left: -$border-offset;
+    right: -$border-offset;
+    bottom: -$border-offset;
+    border-radius: 12px;
+    /* No blur on this layer to keep the 2px border clear */
+  }
+
+  &:hover:after {
+    top: -$blur-offset; /* Extend further from the border */
+    left: -$blur-offset;
+    right: -$blur-offset;
+    bottom: -$blur-offset;
+    border-radius: 12px;
+    filter: blur(8px); /* Apply blur effect to soften the extended gradient */
+    z-index: -2;
+    /* This creates the blurred effect from 2px to 10px away from the border */
   }
 }
