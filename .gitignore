@@ -7,7 +7,7 @@
 /coverage
 
 # Production
-**/build
+**/dist
 
 # Logs
 npm-debug.log*

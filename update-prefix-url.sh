@@ -27,13 +27,13 @@ if [ -n "$URL_PREFIX" ]; then
   fi
 
   # Update index.html, /static to static
-  sed -i "s|/static|static|g" /usr/src/app/client/build/index.html
+  sed -i "s|/assets|assets|g" /usr/src/app/client/dist/index.html
 
-  # Update the static file paths in the build directory
-  for file in /usr/src/app/client/build/static/js/*.js; do
+  # Update the static file paths in the dist directory
+  for file in /usr/src/app/client/dist/assets/js/*.js; do
     sed -i "s|%PUBLIC_URL%|${URL_PREFIX}|g" "$file"
   done
-  for file in /usr/src/app/client/build/static/css/*.css; do
+  for file in /usr/src/app/client/dist/assets/css/*.css; do
     sed -i "s|%PUBLIC_URL%|${URL_PREFIX}|g" "$file"
   done
 
@@ -41,5 +41,5 @@ if [ -n "$URL_PREFIX" ]; then
   sed -i "s|let PrefixUrl = .*|let PrefixUrl = \"${URL_PREFIX}\";|g" /usr/src/app/server/server.js
 
   # Update prefix_conf.js to set URL_PREFIX
-  sed -i "s|URL_PREFIX: .*|URL_PREFIX: \"${URL_PREFIX}\"|g" /usr/src/app/client/build/prefix_conf.js
+  sed -i "s|URL_PREFIX: .*|URL_PREFIX: \"${URL_PREFIX}\"|g" /usr/src/app/client/dist/prefix_conf.js
 fi
