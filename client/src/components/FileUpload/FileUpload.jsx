@@ -1,3 +1,4 @@
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import { Progress } from "@nextui-org/react";
 import { Upload } from 'lucide-react';

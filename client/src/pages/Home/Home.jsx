@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { Textarea, Button } from "@nextui-org/react";
 import { FileUpload, DebridResultTable } from "../../components";

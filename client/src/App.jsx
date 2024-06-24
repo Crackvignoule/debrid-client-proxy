@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavBar } from "./components";
 import { Home, PendingTorrents, SavedLinks, History, Settings } from "./pages";
