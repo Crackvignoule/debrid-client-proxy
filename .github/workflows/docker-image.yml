@@ -25,17 +25,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Docker image for amd64
-      id: build_amd64
-      run: |
-        docker buildx create --use
-        docker buildx build --platform linux/amd64 -t kipavy/debridclientproxy:amd64 --load .
-    
-    - name: Build Docker image for arm64
-      id: build_arm64
-      run: |
-        docker buildx build --platform linux/arm64 -t kipavy/debridclientproxy:arm64 --load .
-
     - name: Build and push multi-architecture Docker images
       uses: docker/build-push-action@v6
       with:
