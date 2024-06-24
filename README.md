@@ -15,6 +15,7 @@ TODO
 services:
   debridclientproxy:
     image: kipavy/debridclientproxy
+    restart: unless-stopped
     ports:
       - "80:5000"
     environment:
@@ -32,7 +33,7 @@ docker-compose up -d
 ### Docker Run
 
 ```bash
-docker run -dit -p 80:5000 -e URL_PREFIX=/debrid kipavy/debridclientproxy
+docker run -dit -p 80:5000 -e URL_PREFIX=/debrid --restart unless-stopped kipavy/debridclientproxy
 ```
 
 ## Testing Docker
