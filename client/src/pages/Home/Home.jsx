@@ -35,7 +35,7 @@ function Home() {
             uploadProgress={uploadProgress}
           />
         </div>
-        <div className="textarea-container">
+        <div className={`textarea-container ${isLinksDisabled ? 'is-disabled' : ''}`}>
           <Textarea
             label="Links/Magnets"
             placeholder="Enter links/magnets to debrid"

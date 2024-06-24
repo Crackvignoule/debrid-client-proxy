@@ -1,3 +1,6 @@
+$border-offset: 0px;
+$blur-offset: 5px;
+
 .container {
     display: flex;
     flex-direction: column;
@@ -45,13 +48,11 @@
   }
 }
 
-.textarea-container {
+.textarea-container:not(.is-disabled) {
   position: relative;
-  overflow: visible; /* Ensure the extended blurred border is visible */
+  overflow: visible; // Ensure the extended blurred border is visible
   padding: 5px;
   border-radius: 12px;
-  $border-offset: 0px; // SCSS variables should be declared at the top of your SCSS file or outside of any selector
-  $blur-offset: 5px;
 
   &:hover:before, &:hover:after {
     content: '';
@@ -62,24 +63,22 @@
     background-position: center;
     animation: spin 4s linear infinite;
   }
-
   &:hover:before {
     top: -$border-offset;
     left: -$border-offset;
     right: -$border-offset;
     bottom: -$border-offset;
     border-radius: 12px;
-    /* No blur on this layer to keep the 2px border clear */
+    // No blur on this layer to keep the 2px border clear
   }
-
   &:hover:after {
-    top: -$blur-offset; /* Extend further from the border */
+    top: -$blur-offset; // Extend further from the border
     left: -$blur-offset;
     right: -$blur-offset;
     bottom: -$blur-offset;
     border-radius: 12px;
-    filter: blur(8px); /* Apply blur effect to soften the extended gradient */
+    filter: blur(8px); // Apply blur effect to soften the extended gradient
     z-index: -2;
-    /* This creates the blurred effect from 2px to 10px away from the border */
+    // This creates the blurred effect from 2px to 10px away from the border
   }
 }
