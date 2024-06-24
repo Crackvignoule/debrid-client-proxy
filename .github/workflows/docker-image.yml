@@ -29,7 +29,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        platforms: linux/amd64,linux/arm64  # adding ,linux/arm/v7 is causing infinite npm install
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
         push: true
         tags: |
           kipavy/debridclientproxy:${{ github.ref_name }}
