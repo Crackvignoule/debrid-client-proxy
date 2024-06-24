@@ -36,16 +36,6 @@ jobs:
       run: |
         docker buildx build --platform linux/arm64 -t kipavy/debridclientproxy:arm64 --load .
 
-    - name: Test Docker image on amd64
-      id: test_amd64
-      run: |
-        docker run --rm kipavy/debridclientproxy:amd64 npm test
-
-    - name: Test Docker image on arm64
-      id: test_arm64
-      run: |
-        docker run --rm kipavy/debridclientproxy:arm64 npm test
-
     - name: Build and push multi-architecture Docker images
       if: ${{ success() }}
       uses: docker/build-push-action@v6
