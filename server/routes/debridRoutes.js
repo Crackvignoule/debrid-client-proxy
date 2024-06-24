@@ -26,15 +26,7 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
 
   // Check if it's a magnet link or a torrent file
   if (magnetOrTorrent.startsWith('magnet:?')) {
-    // Handle magnet link
-    try {
-      const response = await axios.get(`https://api.alldebrid.com/v4/magnet/upload?agent=${agent}&apikey=${apiKey}&magnets[]=${encodeURIComponent(magnetOrTorrent)}`);
-      const magnetID = response.data.data.magnets[0].id;
-      return magnetID;
-    } catch (error) {
-      console.error('Failed to upload magnet link', error);
-      return null;
-    }
+    // Handle magnet link as before
   } else {
     // Handle torrent file
     if (!fs.existsSync(magnetOrTorrent)) {
@@ -42,17 +34,23 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
     }
 
     const formData = new FormData();
-
-    // Append the torrent file to the form data
     formData.append('files[0]', fs.createReadStream(magnetOrTorrent));
     
-    // Upload the torrent file
     try {
       const uploadResponse = await axios.post(`https://api.alldebrid.com/v4/magnet/upload/file?agent=${agent}&apikey=${apiKey}`, formData, {
         headers: formData.getHeaders(),
       });
-      // Get the magnet ID
       const magnetID = uploadResponse.data.data.files[0].id;
+
+      // Cleanup: Delete the file after use
+      fs.unlink(magnetOrTorrent, (err) => {
+        if (err) {
+          console.error(`Error deleting file ${magnetOrTorrent}:`, err);
+        } else {
+          console.log(`Successfully deleted file ${magnetOrTorrent}`);
+        }
+      });
+
       return magnetID;
     } catch (error) {
       console.error('Failed to upload torrent file', error);

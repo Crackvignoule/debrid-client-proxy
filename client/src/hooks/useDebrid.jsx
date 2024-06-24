@@ -52,30 +52,6 @@ export function useDebrid() {
           })
           .then(result => {
             if (result.isPending) {
-              // toast.custom(t => (
-              //   <div>
-              //     <ToastBar toast={t}>
-              //       {/* Default content */}
-              //       <span>A Torrent is Pending...</span>
-              //     </ToastBar>
-              //     <button onClick={() => {
-              //       navigate('/pending-torrents');
-              //       toast.dismiss(t.id); // Optionally dismiss the toast on click
-              //     }}>
-              //       Go to Pending Torrents
-              //     </button>
-              //   </div>
-              // ), {
-              //   icon: '⏳',
-              // });
-              // return result;  // Resolve the promise even if pending
-              // toast.custom((t) => (
-              //   <div
-              //     className={`bg-white px-6 py-4 shadow-md rounded-full`}
-              //   >
-              //     Hello World
-              //   </div>
-              // ));
               toast((t) => (
                 <div>
                   ⏳ A Torrent is Pending...
