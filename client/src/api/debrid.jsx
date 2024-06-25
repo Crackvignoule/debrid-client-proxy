@@ -35,10 +35,10 @@ export const debridLinks = async (links) => {
   try {
     const response = await axios.post(proxyEndpoint, { links }, { headers });
     const debridedLinks = response.data.debridedLinks;
-    const result = debridedLinks.map(({ data: { filename, link } }, index) => ({
-      filename,
+    const result = debridedLinks.map((item, index) => ({
+      filename: item.filename,
       link: links[index],
-      debridedLink: link,
+      debridedLink: item.link,
     }));
     return result;
   } catch (error) {
