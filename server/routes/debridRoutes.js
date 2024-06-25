@@ -26,7 +26,14 @@ const AGENT_NAME = process.env.AGENT_NAME || 'myAppName';
 async function getMagnetId(magnetOrTorrent, apiKey) {
   // Check if it's a magnet link or a torrent file
   if (magnetOrTorrent.startsWith('magnet:?')) {
-    // Handle magnet link as before
+    try {
+      const response = await axios.get(`${BASE_URL}/magnet/upload?agent=${AGENT_NAME}&apikey=${apiKey}&magnets[]=${encodeURIComponent(magnetOrTorrent)}`);
+      const magnetID = response.data.data.magnets[0].id;
+      return magnetID;
+    } catch (error) {
+      console.error('Failed to upload magnet link', error);
+      return null;
+    }
   } else {
     // Handle torrent file
     if (!fs.existsSync(magnetOrTorrent)) {
