@@ -19,7 +19,7 @@ services:
 
 2. **Run the following command:**
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Now you can open http://localhost/debrid in your browser.
