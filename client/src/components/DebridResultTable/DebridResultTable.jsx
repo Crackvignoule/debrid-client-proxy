@@ -3,7 +3,7 @@
 // TODO Copy All button ? copy all links to clipboard
 // TODO add nextui tooltip to buttons
 import React from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
 import { useSaveLinks } from '../../hooks';
@@ -25,12 +25,12 @@ function DebridResultTable({ debridResult }) {
   };
 
   const exportLinksAsTxt = () => {
-    const allLinks = debridResult.map(item => item.link).join('\n');
+    const allLinks = debridResult.map(item => item.debridedLink).join('\n');
     const blob = new Blob([allLinks], { type: 'text/plain' });
     const href = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = href;
-    link.download = 'debrided_links.txt'; // Name of the file to be downloaded
+    link.download = 'debrided_links.txt';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -65,32 +65,36 @@ function DebridResultTable({ debridResult }) {
       {debridResult.length > 0 && (
         <>
           <div className="flex items-center gap-2.5">
-          <Tooltip color="foreground" showArrow={true} content="Download All">
-            <Button
-              isIconOnly
-              onClick={downloadAllLinks}
-              className="bg-cadet-grey"
-            >
-              <HardDriveDownload />
-            </Button>
+            <Tooltip color="foreground" showArrow={true} content="Download All">
+              <Button
+                isIconOnly
+                onClick={downloadAllLinks}
+                className="bg-cadet-grey"
+              >
+                <HardDriveDownload />
+              </Button>
             </Tooltip>
-          <Tooltip color="foreground" showArrow={true} content="Save all on AD">
-            <Button
-              isIconOnly
-              onClick={handleSaveAllLinks}
-              className="bg-cadet-grey"
+            <Tooltip
+              color="foreground"
+              showArrow={true}
+              content="Save all on AD"
             >
-              <SaveAll />
-            </Button>
+              <Button
+                isIconOnly
+                onClick={handleSaveAllLinks}
+                className="bg-cadet-grey"
+              >
+                <SaveAll />
+              </Button>
             </Tooltip>
             <Tooltip color="foreground" showArrow={true} content="Export .txt">
-            <Button
-              isIconOnly
-              onClick={exportLinksAsTxt}
-              className="bg-cadet-grey"
-            >
-              <FileDown />
-            </Button>
+              <Button
+                isIconOnly
+                onClick={exportLinksAsTxt}
+                className="bg-cadet-grey"
+              >
+                <FileDown />
+              </Button>
             </Tooltip>
           </div>
           <Table aria-label="Debrid Results" className="text-cadet-grey">
@@ -114,23 +118,44 @@ function DebridResultTable({ debridResult }) {
                     <TableCell>
                       {columnKey === "actions" ? (
                         <div className="flex items-center gap-2.5">
-                          <Tooltip color="foreground" offset={0} content="Save on AD">
-                          <Button
-                            isIconOnly
-                            onClick={() => saveLinks([item.link])}
-                            className="bg-cadet-grey"
+                          <Tooltip
+                            color="foreground"
+                            offset={0}
+                            content="Download"
                           >
-                            <Save />
-                          </Button>
+                            <Button
+                              isIconOnly
+                              onClick={() => window.open(item.debridedLink)}
+                              className="bg-cadet-grey"
+                            >
+                              <Download />
+                            </Button>
                           </Tooltip>
-                          <Tooltip color="foreground" offset={0} content="Copy Link">
-                          <Button
-                            isIconOnly
-                            onClick={() => copyToClipboard(item.debridedLink)}
-                            className="bg-cadet-grey"
+                          <Tooltip
+                            color="foreground"
+                            offset={0}
+                            content="Save on AD"
                           >
-                            <Copy />
-                          </Button>
+                            <Button
+                              isIconOnly
+                              onClick={() => saveLinks([item.link])}
+                              className="bg-cadet-grey"
+                            >
+                              <Save />
+                            </Button>
+                          </Tooltip>
+                          <Tooltip
+                            color="foreground"
+                            offset={0}
+                            content="Copy Link"
+                          >
+                            <Button
+                              isIconOnly
+                              onClick={() => copyToClipboard(item.debridedLink)}
+                              className="bg-cadet-grey"
+                            >
+                              <Copy />
+                            </Button>
                           </Tooltip>
                         </div>
                       ) : columnKey === "debridedLink" ? (
