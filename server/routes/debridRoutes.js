@@ -5,13 +5,27 @@ const { createApiEndpoint, apiCall, uploadFile } = require('./apiRequest');
 const { BASE_URL, AGENT_NAME } = require('../config');
 
 const router = express.Router();
+
+// Middleware for extracting API key
+const extractApiKey = (req, res, next) => {
+  req.apiKey = req.headers['api-key'];
+  if (!req.apiKey) {
+    return res.status(400).json({ error: 'API key is required' });
+  }
+  next();
+};
+
+// Middleware for error handling
+const asyncHandler = fn => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
+// Setup for file upload
 const upload = multer({
   storage: multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
+    destination: 'uploads/',
     filename: (req, file, cb) => cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
   })
 });
-
 
 async function getMagnetId(magnetOrTorrent, apiKey) {
   if (magnetOrTorrent.startsWith('magnet:?')) {
@@ -23,68 +37,33 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
   }
 }
 
-router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
-  try {
-    const apiKey = req.headers['api-key'];
-    const magnetOrTorrent = req.body.magnetLink || req.file.path;
-    const id = await getMagnetId(magnetOrTorrent, apiKey);
-    res.json({ id });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to process request' });
-  }
-});
+router.post('/getMagnetID', extractApiKey, upload.single('torrent'), asyncHandler(async (req, res) => {
+  const magnetOrTorrent = req.body.magnetLink || req.file.path;
+  const id = await getMagnetId(magnetOrTorrent, req.apiKey);
+  res.json({ id });
+}));
 
-router.post('/getLinksFromMagnet', async (req, res) => {
-  const apiKey = req.headers['api-key'];
+router.post('/getLinksFromMagnet', extractApiKey, asyncHandler(async (req, res) => {
   const { magnetID } = req.body;
-  const apiEndpoint = createApiEndpoint('magnet/status', { apikey: apiKey, id: magnetID });
+  const apiEndpoint = createApiEndpoint('magnet/status', { apikey: req.apiKey, id: magnetID });
+  const response = await apiCall('GET', apiEndpoint);
+  res.json({ links: response.data.magnets.links, statusCode: response.data.magnets.statusCode });
+}));
 
-  try {
-    const response = await apiCall('GET', apiEndpoint);
-    const links = response.data.magnets.links;
-    const statusCode = response.data.magnets.statusCode;
-    console.log('Links:', links);
-    console.log('Status code:', statusCode);
-    res.json({ links, statusCode });
-  } catch (error) {
-    console.error('Failed to get magnet link status', error);
-    res.status(500).json({ error: 'Failed to get magnet link status' });
-  }
-});
-
-router.post("/debridLinks", async (req, res) => {
-  const apiKey = req.headers["api-key"];
+router.post("/debridLinks", extractApiKey, asyncHandler(async (req, res) => {
   const { links } = req.body;
-  
-  try {
-    const debridedLinks = await Promise.all(links.map(link => {
-      const apiEndpoint = createApiEndpoint('link/unlock', { apikey: apiKey, link });
-      return apiCall('GET', apiEndpoint).then(response => response.data);
-    }));
-    res.json({ debridedLinks });
-  } catch (error) {
-    console.error("Error debriding links:", error);
-    res.status(500).json({ error: "Failed to debrid links" });
-  }
-});
+  const debridedLinks = await Promise.all(links.map(link => {
+    const apiEndpoint = createApiEndpoint('link/unlock', { apikey: req.apiKey, link });
+    return apiCall('GET', apiEndpoint).then(response => response.data);
+  }));
+  res.json({ debridedLinks });
+}));
 
-router.post("/saveLinks", async (req, res) => {
-  const apiKey = req.headers["api-key"];
+router.post("/saveLinks", extractApiKey, asyncHandler(async (req, res) => {
   const { links } = req.body;
-  const apiEndpoint = createApiEndpoint('user/links/save', {
-    apikey: apiKey,
-    'links[]': links
-  });
-
-  try {
-    const response = await apiCall('GET', apiEndpoint, null, {
-      validateStatus: false // Handle HTTP status code >= 400
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error saving links:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+  const apiEndpoint = createApiEndpoint('user/links/save', { apikey: req.apiKey, 'links[]': links });
+  const response = await apiCall('GET', apiEndpoint, null, { validateStatus: false });
+  res.json(response.data);
+}));
 
 module.exports = router;
