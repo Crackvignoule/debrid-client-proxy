@@ -5,7 +5,7 @@
 import React from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 import { Button, Tooltip } from "@nextui-org/react";
-import { Save, SaveAll, Download, Copy, FileDown } from 'lucide-react';
+import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
 import { useSaveLinks } from '../../hooks';
 import { toast } from 'react-hot-toast';
 
@@ -37,6 +37,22 @@ function DebridResultTable({ debridResult }) {
     URL.revokeObjectURL(href);
   };
 
+  const downloadAllLinks = () => {
+    // Bypass browser popup blocker by opening links in iframes
+    debridResult.forEach((item, index) => {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none'; // Make the iframe invisible
+        iframe.src = item.debridedLink;
+        iframe.id = `downloadIframe-${index}`;
+        document.body.appendChild(iframe);
+        // Optional: Remove the iframe after a delay to clean up
+        // setTimeout(() => {
+        //     document.body.removeChild(iframe);
+        // }, 1000); // Adjust delay as needed
+    });
+    toast.success('All links are being opened');
+};
+
   const columns = [
     { key: "no", label: "No." },
     { key: "filename", label: "Filename" },
@@ -49,10 +65,19 @@ function DebridResultTable({ debridResult }) {
       {debridResult.length > 0 && (
         <>
           <div className="flex items-center gap-2.5">
+          <Tooltip color="foreground" showArrow={true} content="Download All">
+            <Button
+              isIconOnly
+              onClick={downloadAllLinks}
+              className="bg-cadet-grey"
+            >
+              <HardDriveDownload />
+            </Button>
+            </Tooltip>
           <Tooltip color="foreground" showArrow={true} content="Save all on AD">
             <Button
               isIconOnly
-              onClick={() => handleSaveAllLinks()}
+              onClick={handleSaveAllLinks}
               className="bg-cadet-grey"
             >
               <SaveAll />
@@ -101,7 +126,7 @@ function DebridResultTable({ debridResult }) {
                           <Tooltip color="foreground" offset={0} content="Copy Link">
                           <Button
                             isIconOnly
-                            onClick={() => copyToClipboard(item.link)}
+                            onClick={() => copyToClipboard(item.debridedLink)}
                             className="bg-cadet-grey"
                           >
                             <Copy />
