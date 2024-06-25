@@ -49,6 +49,7 @@ function DebridResultTable({ debridResult }) {
       {debridResult.length > 0 && (
         <>
           <div className="flex items-center gap-2.5">
+          <Tooltip color="foreground" showArrow={true} content="Save all on AD">
             <Button
               isIconOnly
               onClick={() => handleSaveAllLinks()}
@@ -56,14 +57,14 @@ function DebridResultTable({ debridResult }) {
             >
               <SaveAll />
             </Button>
-            <Tooltip showArrow={true} content="I am a tooltip">
+            </Tooltip>
+            <Tooltip color="foreground" showArrow={true} content="Export .txt">
             <Button
               isIconOnly
               onClick={exportLinksAsTxt}
               className="bg-cadet-grey"
             >
-              <FileDown />{" "}
-              {/* Assuming Download icon is appropriate for "Export" */}
+              <FileDown />
             </Button>
             </Tooltip>
           </div>
@@ -88,6 +89,7 @@ function DebridResultTable({ debridResult }) {
                     <TableCell>
                       {columnKey === "actions" ? (
                         <div className="flex items-center gap-2.5">
+                          <Tooltip color="foreground" offset={0} content="Save on AD">
                           <Button
                             isIconOnly
                             onClick={() => saveLinks([item.link])}
@@ -95,6 +97,8 @@ function DebridResultTable({ debridResult }) {
                           >
                             <Save />
                           </Button>
+                          </Tooltip>
+                          <Tooltip color="foreground" offset={0} content="Copy Link">
                           <Button
                             isIconOnly
                             onClick={() => copyToClipboard(item.link)}
@@ -102,6 +106,7 @@ function DebridResultTable({ debridResult }) {
                           >
                             <Copy />
                           </Button>
+                          </Tooltip>
                         </div>
                       ) : columnKey === "debridedLink" ? (
                         <a
