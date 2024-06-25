@@ -1,5 +1,4 @@
 // TODO Maybe functions shouldnt be here
-// TODO Temp file ? Or delete after use ?
 // TODO Global agent and apikey ?
 const express = require('express');
 const router = express.Router();
@@ -19,11 +18,12 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
+// TODO update readme and docker hub readme
+const BASE_URL = process.env.ALLDEBRID_BASE_URL || 'https://api.alldebrid.com/v4';
+const AGENT_NAME = process.env.AGENT_NAME || 'myAppName';
 
 
 async function getMagnetId(magnetOrTorrent, apiKey) {
-  const agent = 'myAppName'; // Replace with your app name
-
   // Check if it's a magnet link or a torrent file
   if (magnetOrTorrent.startsWith('magnet:?')) {
     // Handle magnet link as before
@@ -37,7 +37,7 @@ async function getMagnetId(magnetOrTorrent, apiKey) {
     formData.append('files[0]', fs.createReadStream(magnetOrTorrent));
     
     try {
-      const uploadResponse = await axios.post(`https://api.alldebrid.com/v4/magnet/upload/file?agent=${agent}&apikey=${apiKey}`, formData, {
+      const uploadResponse = await axios.post(`${BASE_URL}/magnet/upload/file?agent=${AGENT_NAME}&apikey=${apiKey}`, formData, {
         headers: formData.getHeaders(),
       });
       const magnetID = uploadResponse.data.data.files[0].id;
@@ -80,8 +80,7 @@ router.post('/getMagnetID', upload.single('torrent'), async (req, res) => {
 router.post('/getLinksFromMagnet', async (req, res) => {
   const apiKey = req.headers['api-key'];
   const { magnetID } = req.body;
-  const agent = 'myAppName'; // Replace with your app name
-  const apiEndpoint = `https://api.alldebrid.com/v4/magnet/status?agent=${agent}&apikey=${apiKey}&id=${encodeURIComponent(magnetID)}`;
+  const apiEndpoint = `${BASE_URL}/magnet/status?agent=${AGENT_NAME}&apikey=${apiKey}&id=${encodeURIComponent(magnetID)}`;
 
   try {
     const response = await axios.get(apiEndpoint);
@@ -98,9 +97,8 @@ router.post('/getLinksFromMagnet', async (req, res) => {
 router.post("/debridLinks", async (req, res) => {
   const apiKey = req.headers["api-key"];
   const { links } = req.body;
-  const agent = "myAppName";
   
-  const apiEndpoint = `https://api.alldebrid.com/v4/link/unlock?agent=${agent}&apikey=${apiKey}`;
+  const apiEndpoint = `${BASE_URL}/link/unlock?agent=${AGENT_NAME}&apikey=${apiKey}`;
 
   try {
     const debridedLinks = await Promise.all(links.map(async link => {
@@ -118,13 +116,12 @@ router.post("/debridLinks", async (req, res) => {
 router.post("/saveLinks", async (req, res) => {
   const apiKey = req.headers["api-key"];
   const { links } = req.body;
-  const agent = "myAppName";
-  const apiEndpoint = "https://api.alldebrid.com/v4/user/links/save";
+  const apiEndpoint = `${BASE_URL}/user/links/save`;
 
   try {
     // Construct query parameters
     const queryParams = querystring.stringify({
-      agent,
+      AGENT_NAME,
       apikey: apiKey,
       'links[]': links.map(link => encodeURIComponent(link)),
     }, null, null, {

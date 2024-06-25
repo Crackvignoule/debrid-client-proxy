@@ -1,4 +1,4 @@
-// TODO Use status live from api to track magnet progress on alldebrid side
+// TODO Implement history with copy debrided link button and save all links button (+export to file)
 function History() {
     return (
       <div>

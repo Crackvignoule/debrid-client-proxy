@@ -4,7 +4,6 @@ import { Progress } from "@nextui-org/react";
 import { Upload } from 'lucide-react';
 import "./FileUpload.scss";
 
-// TODO Add a toaster if user is clicking on disabled input
 
 function FileUpload({ file, setFile, disabled, uploadProgress }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

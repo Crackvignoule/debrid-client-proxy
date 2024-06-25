@@ -50,9 +50,7 @@ $gradient-radial: radial-gradient(#000e18ff, #001524ff, #2c7da0ff, #63e7d8ff, #f
 @tailwind components;
 @tailwind utilities;
 
-// // TODO Tailwind preflight destroyed the default styles, is there a better way to change bkg color and margin of body ?
-
-// /* Override Tailwind defaults */
+/* Override Tailwind defaults */
 html, body {
   margin: 0.3rem !important;
 }
