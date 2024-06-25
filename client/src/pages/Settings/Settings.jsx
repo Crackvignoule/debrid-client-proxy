@@ -25,7 +25,7 @@ function Settings() {
           value={apiKey}
           onChange={updateApiKey}
           onClear={clearApiKey}
-          className="input-field"
+          className="input-field text-rich-black"
         />
       </div>
       <Button

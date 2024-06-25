@@ -46,5 +46,6 @@ docker build -t debridclientproxy . ; docker run -dit -p 80:5000 debridclientpro
 ## Dev
 
 ```bash
+cd server; npm i; cd ../client; npm i; cd ..; npm i
 npm run dev
 ```
