@@ -29,7 +29,7 @@ function DebridResultTable({ debridResult }) {
             onClick={() => handleSaveAllLinks()}
             className="bg-cadet-grey"
           >
-            <Save />
+            <SaveAll />
           </Button>
           <Table aria-label="Debrid Results" className="text-cadet-grey">
             <TableHeader columns={columns}>

@@ -6,9 +6,9 @@ const useSaveLinks = () => {
         return toast.promise(
             apiSaveLinks(links), // Use the renamed imported function
             {
-                loading: 'Saving link...',
-                success: <b>Link saved successfully!</b>,
-                error: <b>Could not save link.</b>,
+                loading: 'Saving link(s)...',
+                success: <b>Link(s) saved successfully!</b>,
+                error: <b>Could not save link(s).</b>,
             }
         );
     }
