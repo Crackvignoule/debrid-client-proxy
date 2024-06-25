@@ -1,6 +1,10 @@
 $border-offset: 0px;
 $blur-offset: 5px;
 
+.textarea-container textarea::placeholder {
+  color: #4b494c ;
+}
+
 .container {
     display: flex;
     flex-direction: column;

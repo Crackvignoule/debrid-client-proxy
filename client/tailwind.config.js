@@ -41,7 +41,7 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            foreground: "#4b494c", // color of textarea hint
+            foreground: "#99b3b6ff", // color of textarea hint
             background: "#000e18ff", // bkg
             content1: "#001524ff",
             default: {
