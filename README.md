@@ -1,16 +1,11 @@
 # Debrid Client Proxy
+<!-- Image + icone rectangle github + rapide description -->
 
-## Description
-TODO
+## Usage
 
-## Installation
-
-<!-- docker run and compose methods -->
-
-### Docker Compose
+### docker compose (recommended):
 
 1. **Create a `docker-compose.yml` file** with the following content:
-
 ```yaml
 services:
   debridclientproxy:
@@ -18,28 +13,33 @@ services:
     restart: unless-stopped
     ports:
       - "80:5000"
-    environment:
+    environment:  # Optional
       - URL_PREFIX=/debrid
+```
+
+2. **Run the following command:**
+```bash
+docker-compose up -d
 ```
 
 Now you can open http://localhost/debrid in your browser.
 
 Note: URL_PREFIX is optional, it is used to prefix the routes of the proxy. Example: Instead of `http://localhost/` it will be `http://localhost/debrid/`
 
-```bash
-docker-compose up -d
-```
-
-### Docker Run
+### docker run:
 
 ```bash
-docker run -dit -p 80:5000 -e URL_PREFIX=/debrid --restart unless-stopped kipavy/debridclientproxy
+docker run -dit \
+  -p 80:5000 \
+  -e URL_PREFIX=/debrid \
+  --restart unless-stopped \
+  kipavy/debridclientproxy
 ```
 
 ## Testing Docker
 
 ```bash
-docker build -t debridclientproxy . ; docker run -dit -p 5000:5000 debridclientproxy
+docker build -t debridclientproxy . ; docker run -dit -p 80:5000 debridclientproxy
 ```
 
 ## Dev
