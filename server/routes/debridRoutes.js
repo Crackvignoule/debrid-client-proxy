@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
-// TODO update readme and docker hub readme
+
 const BASE_URL = process.env.ALLDEBRID_BASE_URL || 'https://api.alldebrid.com/v4';
 const AGENT_NAME = process.env.AGENT_NAME || 'myAppName';
 

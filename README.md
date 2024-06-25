@@ -13,8 +13,9 @@ services:
     restart: unless-stopped
     ports:
       - "80:5000"
-    environment:  # Optional
+    environment:  # Optionals
       - URL_PREFIX=/debrid
+      - AGENT_NAME=YourAgentName
 ```
 
 2. **Run the following command:**
@@ -24,7 +25,7 @@ docker compose up -d
 
 Now you can open http://localhost/debrid in your browser.
 
-Note: URL_PREFIX is optional, it is used to prefix the routes of the proxy. Example: Instead of `http://localhost/` it will be `http://localhost/debrid/`
+Note: URL_PREFIX & AGENT_NAME are optionals, URL_PREFIX is used to prefix the routes of the proxy. Example: Instead of `http://localhost/` it will be `http://localhost/debrid/`. AGENT_NAME is used to set the user-agent of the requests made by the proxy.
 
 ### docker run:
 
