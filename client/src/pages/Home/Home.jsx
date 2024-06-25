@@ -52,7 +52,7 @@ function Home() {
           onClick={() => debrid(file || links)}
           radius="full"
           isDisabled={!file && !links}
-          className="bg-gradient-to-tr from-indigo-500 from-10% via-cerulean via-50% to-turquoise to-90%"
+          className="mb-3 bg-gradient-to-tr from-indigo-500 from-10% via-cerulean via-50% to-turquoise to-90%"
         >
           Debrid
         </Button>
