@@ -1,6 +1,8 @@
 # Debrid Client Proxy
 <!-- Image + icone rectangle github + rapide description -->
 
+Debrid Client Proxy is a sophisticated proxy server designed for All-Debrid services. It centralizes your network requests, presenting a single IP address to your debrid provider, thereby enabling seamless access from any IP address. This is particularly useful for sharing access with trusted individuals without exposing multiple IP addresses. Built using the modern and efficient Vite, React, and Express stack, it offers a streamlined and user-friendly experience for managing your debrid service connections.
+
 ## Usage
 
 ### docker compose (recommended):
