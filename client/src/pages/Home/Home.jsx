@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea, Button } from "@nextui-org/react";
 import { FileUpload, DebridResultTable } from "../../components";
 import { useDebrid, useDebridState } from "../../hooks";

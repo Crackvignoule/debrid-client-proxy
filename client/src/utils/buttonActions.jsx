@@ -6,7 +6,7 @@ const copyToClipboard = (link) => {
     });
   };
 
-  const exportLinksAsTxt = () => {
+  const exportLinksAsTxt = (debridResult) => {
     const allLinks = debridResult.map(item => item.debridedLink).join('\n');
     const blob = new Blob([allLinks], { type: 'text/plain' });
     const href = URL.createObjectURL(blob);
@@ -19,7 +19,7 @@ const copyToClipboard = (link) => {
     URL.revokeObjectURL(href);
   };
 
-  const downloadAllLinks = () => {
+  const downloadAllLinks = (debridResult) => {
     debridResult.forEach((item, index) => {
       const iframe = document.createElement('iframe');
       iframe.style.display = 'none';
