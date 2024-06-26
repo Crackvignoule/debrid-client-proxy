@@ -1,13 +1,14 @@
+// TODO Refactor
 import { useState } from 'react';
 import { Pagination } from "@nextui-org/react";
-import { useFetchLinks } from '../../hooks';
+import { useLinkManagement } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { CommonTable, ActionButton } from '../../components';
-import { Download } from 'lucide-react';
+import { Download, Trash2 } from 'lucide-react';
 
 function SavedLinks() {
   const navigate = useNavigate();
-  const { links } = useFetchLinks();
+  const { links, deleteLinks } = useLinkManagement();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -44,6 +45,11 @@ function SavedLinks() {
                   tooltipContent="Debrid"
                   onClick={() => handleDebridClick(item.link)}
                   icon={Download}
+                />
+                <ActionButton
+                  tooltipContent="Delete"
+                  onClick={() => deleteLinks(item.link)}
+                  icon={Trash2}
                 />
               </div>
             );

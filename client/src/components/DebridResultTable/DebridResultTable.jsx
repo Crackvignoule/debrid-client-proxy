@@ -1,12 +1,12 @@
 import { Tooltip } from '@nextui-org/react';
 import { CommonTable, ActionButton } from '..';
-import { useSaveLinks } from '../../hooks';
+import { useLinkManagement } from '../../hooks';
 import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '../../utils';
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
 
 
 function DebridResultTable({ debridResult }) {
-  const { saveLinks } = useSaveLinks();
+  const { saveLinks } = useLinkManagement();
 
   const handleSaveAllLinks = () => {
     const allLinks = debridResult.map(item => item.link);
