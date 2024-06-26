@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Tooltip, Pagination } from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 import { useFetchLinks } from '../../hooks';
-import { CommonTable } from '../../components';
+import { useNavigate } from 'react-router-dom';
+import { CommonTable, ActionButton } from '../../components';
+import { Download } from 'lucide-react';
 
 function SavedLinks() {
+  const navigate = useNavigate();
   const { links } = useFetchLinks();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -19,6 +22,10 @@ function SavedLinks() {
 
   const handlePageChange = (page) => setCurrentPage(page);
 
+  const handleDebridClick = (link) => {
+    navigate('/', { state: { link } });
+  };
+
   return (
     <>
       <CommonTable
@@ -29,10 +36,16 @@ function SavedLinks() {
         }))}
         renderCell={(item, columnKey) => {
           if (columnKey === "filename") {
+            return <>{item.filename}</>;
+          } else if (columnKey === "actions") {
             return (
-              <Tooltip content={item.filename} color="foreground" showArrow={true}>
-                <span className="truncate max-w-sm block">{item.filename}</span>
-              </Tooltip>
+              <div className="flex items-center gap-2.5">
+                <ActionButton
+                  tooltipContent="Debrid"
+                  onClick={() => handleDebridClick(item.link)}
+                  icon={Download}
+                />
+              </div>
             );
           } else {
             return item[columnKey];

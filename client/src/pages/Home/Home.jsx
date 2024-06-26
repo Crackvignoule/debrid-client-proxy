@@ -1,8 +1,8 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Textarea, Button } from "@nextui-org/react";
 import { FileUpload, DebridResultTable } from "../../components";
 import { useDebrid, useDebridState } from "../../hooks";
+import { useLocation } from 'react-router-dom';
 import "./Home.scss";
 
 function Home() {
@@ -17,12 +17,22 @@ function Home() {
     setIsLinksDisabled
   } = useDebridState();
   const { debrid, debridResult, uploadProgress } = useDebrid();
-
+  const location = useLocation();
+  const [isDebridTriggered, setIsDebridTriggered] = useState(false);
 
   useEffect(() => {
     setIsLinksDisabled(!!file);
     setIsFileDisabled(!!links);
   }, [file, links, setIsFileDisabled, setIsLinksDisabled]);
+
+  useEffect(() => {
+    if (location.state?.link && !isDebridTriggered) {
+      setLinks(location.state.link);
+      debrid(location.state.link);
+      setIsDebridTriggered(true);
+      window.history.replaceState(null, ''); // clear location state
+    }
+  }, [location.state, setLinks, debrid, isDebridTriggered]);
 
   return (
     <div className="container">
@@ -45,6 +55,7 @@ function Home() {
             isDisabled={isLinksDisabled}
             minRows={7}
             maxRows={7}
+            value={links}
           />
         </div>
       </div>
