@@ -1,23 +1,11 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
+const { asyncHandler, extractApiKey } = require('../middleware');
 const { createApiEndpoint, apiCall, uploadFile } = require('./apiRequest');
 const { BASE_URL, AGENT_NAME } = require('../config');
 
 const router = express.Router();
-
-// Middleware for extracting API key
-const extractApiKey = (req, res, next) => {
-  req.apiKey = req.headers['api-key'];
-  if (!req.apiKey) {
-    return res.status(400).json({ error: 'API key is required' });
-  }
-  next();
-};
-
-// Middleware for error handling
-const asyncHandler = fn => (req, res, next) =>
-  Promise.resolve(fn(req, res, next)).catch(next);
 
 // Setup for file upload
 const upload = multer({

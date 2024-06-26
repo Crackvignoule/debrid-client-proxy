@@ -16,7 +16,6 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
     },
     disabled
   });
-
   // Conditional class or style
   const dropzoneClass = `file-upload ${disabled ? "disabled" : ""} ${isDragActive ? "hover-style" : ""}`;
 
@@ -26,7 +25,7 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
         className={dropzoneClass}
         {...getRootProps()}
       >
-        <input {...getInputProps(dropzoneClass)} />
+        <input {...getInputProps()} />
         <Upload size={24} />
         <p>Upload File</p>
         {file && <p>Selected file: {file.name}</p>}
