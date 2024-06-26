@@ -158,6 +158,10 @@ function DebridResultTable({ debridResult }) {
                             </Button>
                           </Tooltip>
                         </div>
+                      ) : columnKey === "filename" ? (
+                        <Tooltip content={item.filename} color="foreground" showArrow={true}>
+                          <span className="truncate max-w-sm block">{item.filename}</span>
+                        </Tooltip>
                       ) : columnKey === "debridedLink" ? (
                         <a
                           href={item.debridedLink}
