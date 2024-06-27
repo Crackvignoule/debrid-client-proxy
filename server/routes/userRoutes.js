@@ -4,6 +4,24 @@ const { asyncHandler, extractApiKey } = require('../middleware');
 
 const router = express.Router();
 
+router.get('checkApiKey/:key', async (req, res) => {
+    const API_KEY = req.params.key;
+    const apiEndpoint = `${BASE_URL}/user?agent=${AGENT_NAME}&apikey=${API_KEY}`;
+  
+    try {
+      const response = await fetch(apiEndpoint);
+      const data = await response.json();
+  
+      if (data.status === 'success') {
+        res.json({ isValid: true });
+      } else {
+        res.json({ isValid: false });
+      }
+    } catch (error) {
+      res.json({ isValid: false });
+    }
+});
+
 router.get('/getSavedLinks', extractApiKey, asyncHandler(async (req, res) => {
     const apiEndpoint = createApiEndpoint('user/links', { apikey: req.apiKey });
     const response = await apiCall('GET', apiEndpoint);
