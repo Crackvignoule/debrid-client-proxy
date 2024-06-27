@@ -5,6 +5,14 @@ const { asyncHandler, extractApiKey } = require('../middleware');
 
 const router = express.Router();
 
+router.get('/auth', extractApiKey, asyncHandler(async (req, res) => {
+  // GET https://api.alldebrid.com/v4/pin/get?agent=myAppName
+  const apiEndpoint = createApiEndpoint('pin/get', { apikey: req.apiKey });
+  const response = await apiCall('GET', apiEndpoint);
+  res.json({ pin: response.data.pin, expires_in: response.data.expires_in });
+}
+));
+
 router.get('/checkApiKey', extractApiKey, asyncHandler(async (req, res) => {
   const apiEndpoint = createApiEndpoint('user', { apikey: req.apiKey });
   const response = await apiCall('GET', apiEndpoint);
