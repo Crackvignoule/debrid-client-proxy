@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const debridRoutes = require('./debridRoutes');
-const checkApiKeyRoutes = require('./checkApiKeyRoutes');
 const userRoutes = require('./userRoutes');
+const debridRoutes = require('./debridRoutes');
 
-router.use('/debrid', debridRoutes);
-router.use('/checkApiKey', checkApiKeyRoutes);
 router.use('/user', userRoutes);
+router.use('/debrid', debridRoutes);
 
 module.exports = router;
