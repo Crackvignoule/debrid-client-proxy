@@ -1,4 +1,5 @@
 // TODO Refactor
+// TODO Add multi select delete (add confirmation prompt) & debrid
 import { useState } from 'react';
 import { Pagination, Input } from "@nextui-org/react";
 import { useLinkManagement } from '../../hooks';
@@ -40,6 +41,7 @@ function SavedLinks() {
   };
 
   return (
+    // TODO Search bar as global component
     <>
       <Input
         placeholder="Search"

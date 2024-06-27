@@ -1,7 +1,7 @@
+// TODO Make API call match AD API paths like /user/history
 const express = require('express');
 const { createApiEndpoint, apiCall } = require('./apiRequest');
 const { asyncHandler, extractApiKey } = require('../middleware');
-const { BASE_URL, AGENT_NAME } = require('../config');
 
 const router = express.Router();
 
@@ -14,6 +14,13 @@ router.get('/checkApiKey', extractApiKey, asyncHandler(async (req, res) => {
   } else {
       res.json({ isValid: false });
   }
+}));
+
+router.get('/history', extractApiKey, asyncHandler(async (req, res) => {
+  // GET https://api.alldebrid.com/user/history?agent=myAppName&apikey=someValidApikeyYouGenerated
+  const apiEndpoint = createApiEndpoint('user/history', { apikey: req.apiKey });
+  const response = await apiCall('GET', apiEndpoint);
+  res.json({ history: response.data.links });
 }));
 
 router.get('/getSavedLinks', extractApiKey, asyncHandler(async (req, res) => {

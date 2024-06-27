@@ -34,3 +34,10 @@ export const fetchLinks = () => {
     const headers = { "api-key": apiKey };
     return axios.get(`${PrefixUrl}/api/user/getSavedLinks`, { headers });
   };
+
+export const getHistory = async () => {
+    const apiKey = localStorage.getItem("apiKey");
+    const headers = { "api-key": apiKey };
+    const response = await axios.get(`${PrefixUrl}/api/user/history`, { headers });
+    return response.data.history;
+  }
