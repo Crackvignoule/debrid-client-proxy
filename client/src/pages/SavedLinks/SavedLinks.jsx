@@ -41,10 +41,9 @@ function SavedLinks() {
 
   return (
     <>
-       {/* TODO Change color of Logo and caret and text rich-black */}
       <Input
         placeholder="Search"
-        className="m-5 w-1/2 mx-auto"
+        className="m-5 w-1/2 mx-auto text-rich-black"
         startContent={<Search />}
         onValueChange={handleSearchChange}
       />
