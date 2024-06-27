@@ -29,7 +29,7 @@ router.get('/getSavedLinks', extractApiKey, asyncHandler(async (req, res) => {
 }));
 
 router.get('/deleteLink', extractApiKey, asyncHandler(async (req, res) => {
-    // Assuming link is provided as a comma-separated list (e.g., link=LINK1,LINK2)
+    // TODO: revert back to no single deletition
     const links = req.query.link ? req.query.link.split(',') : [];
     const queryParams = {
         apikey: req.apiKey,
