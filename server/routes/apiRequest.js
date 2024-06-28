@@ -7,11 +7,9 @@ const { BASE_URL, AGENT_NAME } = require('../config');
 
 
 // generateResponse 
-const generateResponse = async (req, res, endpoint, formatResponse, method = 'GET', queryParams = {}) => {
+const generateResponse = async ({ req, res, method = 'GET', endpoint, queryParams = {}, formatResponse }) => {
   const apiEndpoint = createApiEndpoint(endpoint, queryParams);
   const response = await apiCall(method, apiEndpoint);
-  console.log(apiEndpoint);
-  console.log(response);
   return res.json(formatResponse(response));
 };
 
