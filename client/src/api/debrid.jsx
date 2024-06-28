@@ -46,3 +46,24 @@ export const debridLinks = async (links) => {
     throw error;
   }
 };
+
+export async function getLiveStatus(sessionId, counter) {
+const apiKey = localStorage.getItem("apiKey");
+  const headers = { "api-key": apiKey };
+  const proxyEndpoint = `${PrefixUrl}/api/magnet/status`;
+
+  try {
+    const response = await axios.get(proxyEndpoint, {
+      headers,
+      params: { session: sessionId, counter },
+    });
+    const magnets = response.data.magnets;
+    const nextCounter = response.data.counter;
+    const fullsync = response.data.fullsync;
+  
+    return { magnets, nextCounter, fullsync };
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}

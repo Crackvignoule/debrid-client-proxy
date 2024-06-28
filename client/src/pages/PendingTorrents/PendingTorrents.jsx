@@ -1,10 +1,19 @@
-// TODO Use status live from api to track magnet progress on alldebrid side
+import useLiveStatus from '../../hooks/useLiveStatus';
+
 function PendingTorrents() {
-    return (
-      <div>
-        <h1>Pending Torrents</h1>
-      </div>
-    );
-  }
-  
-  export default PendingTorrents;
+  const { magnets } = useLiveStatus();
+
+  return (
+    <div>
+      <h1>Pending Torrents</h1>
+      {magnets.map(magnet => (
+        <div key={magnet.id}>
+          {console.log(magnet)}
+          ID: {magnet.id}, Downloaded: {magnet.downloaded}, Speed: {magnet.downloadSpeed}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default PendingTorrents;
