@@ -1,11 +1,20 @@
 .input-container {
-    display: flex;
-    justify-content: space-between; // This will place the button to the right
-    align-items: center; // This will center items vertically
-    width: 50%;
-    margin: 2vh auto;
-  
-    .input-field {
-      width: 100%; // Adjust width as needed
+  display: flex;
+  width: 40%;
+  align-items: center; // Center items vertically
+  justify-content: center; // Center items horizontally
+  margin: auto; // Center the container itself
+  margin-top: 4rem;
+
+  .textarea {
+    flex-grow: 1; // Allow textarea to fill the available space
+    margin-right: 5%;
+  }
+
+  button {
+    width: 6rem;
+    &:first-of-type {
+      margin-right: 1rem;
     }
+  }
 }

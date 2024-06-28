@@ -1,3 +1,4 @@
+// Helper function to construct API endpoints
 const fs = require('fs');
 const axios = require('axios');
 const FormData = require('form-data');
@@ -5,7 +6,15 @@ const querystring = require('querystring');
 const { BASE_URL, AGENT_NAME } = require('../config');
 
 
-// Helper function to construct API endpoints
+// generateResponse 
+const generateResponse = async (req, res, endpoint, formatResponse, method = 'GET', queryParams = {}) => {
+  const apiEndpoint = createApiEndpoint(endpoint, queryParams);
+  const response = await apiCall(method, apiEndpoint);
+  console.log(apiEndpoint);
+  console.log(response);
+  return res.json(formatResponse(response));
+};
+
 function createApiEndpoint(path, params = {}) {
     const query = querystring.stringify({ ...params, agent: AGENT_NAME }, null, null, {
       encodeURIComponent: str => str // Prevent double encoding
@@ -64,4 +73,4 @@ async function uploadFile(filePath, apiKey) {
   }
 }
 
-module.exports = { createApiEndpoint, apiCall, uploadFile };
+module.exports = { generateResponse, createApiEndpoint, apiCall, uploadFile };
