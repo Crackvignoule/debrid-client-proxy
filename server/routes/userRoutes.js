@@ -5,17 +5,16 @@ const { asyncHandler, extractApiKey } = require('../middleware');
 const router = express.Router();
 
 router.get('/auth', asyncHandler(async (req, res) => {
-    await generateResponse({
-      req,
-      res,
-      endpoint: "pin/get",
-      formatResponse: (response) => ({
-        pin: response.data.pin,
-        check: response.data.check,
-        url: response.data.user_url,
-    })});
-  })
-);
+  await generateResponse({
+    req,
+    res,
+    endpoint: "pin/get",
+    formatResponse: (response) => ({
+      pin: response.data.pin,
+      check: response.data.check,
+      url: response.data.user_url,
+  })});
+}));
 
 router.get('/getApiKey', asyncHandler(async (req, res) => {
   const { pin, check } = req.headers;
@@ -65,7 +64,6 @@ router.get('/deleteLink', extractApiKey, asyncHandler(async (req, res) => {
   await generateResponse({
     req,
     res,
-    method: 'GET',
     endpoint: 'user/links/delete',
     queryParams: queryParams,
     formatResponse: response => ({ success: response.status === 'success' })
