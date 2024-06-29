@@ -1,4 +1,3 @@
-<!-- insert img https://imgur.com/a/MtSqWO3 -->
 ![Debrid Client Proxy](https://i.imgur.com/zaLnApz.png)
 
 <div align="center">
