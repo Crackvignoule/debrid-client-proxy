@@ -50,15 +50,17 @@ docker run -dit \
   kipavy/debridclientproxy
 ```
 
-## Testing Docker
+## DEV ONLY
 
-```bash
-docker build -t debridclientproxy . ; docker run -dit -p 80:5000 debridclientproxy
-```
-
-## Dev
+### Installing dependencies and running
 
 ```bash
 cd server; npm i; cd ../client; npm i; cd ..; npm i
 npm run dev
+```
+
+### Testing Docker
+
+```bash
+docker build -t debridclientproxy . ; docker run -dit -p 80:5000 debridclientproxy
 ```
