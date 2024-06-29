@@ -19,20 +19,6 @@ module.exports = {
         'rich-black': '#000e18ff',
         'rich-black-2': '#001524ff',
       },
-      backgroundImage: {
-        'gradient-top': 'linear-gradient(0deg, #001b30ff, #012a4aff, #013a63ff, #014f86ff, #2c7da0ff, #63e7d8ff, #f5feffff)',
-        'gradient-right': 'linear-gradient(90deg, #001b30ff, #012a4aff, #013a63ff, #014f86ff, #2c7da0ff, #63e7d8ff, #f5feffff)',
-        // Add other gradients as needed
-      },
-      keyframes: {
-        rotateGradient: {
-          '0%': { background: 'linear-gradient(90deg, #34d399, #3b82f6)' },
-          '100%': { background: 'linear-gradient(160deg, #34d399, #3b82f6)' }, // 90 + 70 = 160 degrees
-        },
-      },
-      animation: {
-        'rotate-gradient': 'rotateGradient 1s forwards',
-      },
     },
   },
   darkMode: "class",

@@ -49,4 +49,28 @@
       width: 100px; /* adjust as needed */
       height: auto; /* maintain aspect ratio */
     }
+}
+
+// TODO INCLUDE WEBKIT AND MOZ FOR BROWSER COMPATIBILITY ?
+@keyframes moveGradient {
+  0% {
+    background-position: 0% center;
   }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.navbar .navbar__links .navbar__link.navbar__link--active {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #6366f1,
+    #2c7da0,
+    #42B4C0,
+    #6366f1,
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  animation: moveGradient 5s linear infinite;
+}
