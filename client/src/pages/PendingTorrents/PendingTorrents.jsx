@@ -1,11 +1,13 @@
 import useLiveStatus from '../../hooks/useLiveStatus';
 import { CommonTable, ActionButton } from '../../components';
 import { Progress, Tooltip } from "@nextui-org/react";
-import "./PendingTorrents.scss";
+import { useLinkManagement } from '../../hooks';
 import { Trash2 } from 'lucide-react';
+import "./PendingTorrents.scss";
 
 function PendingTorrents() {
   const { magnets } = useLiveStatus();
+  const { deleteMagnet } = useLinkManagement();
 
   const columns = [
     { key: 'eta', label: 'ETA', class: 'w-1/6'},
@@ -13,7 +15,7 @@ function PendingTorrents() {
     { key: 'progress', label: 'Progress', class: 'w-1/3'},
     { key: 'downloadSpeed', label: 'Speed', class: 'w-[12%]' },
     { key: 'size', label: 'Size', class: 'w-[12%]'},
-    { key: 'peers', label: 'Peers' },
+    { key: 'seeders', label: 'Peers' },
     { key: 'actions', label: 'Actions' },
   ];
 
@@ -22,7 +24,7 @@ function PendingTorrents() {
     eta: getStatusText(magnet.statusCode),
     downloaded: magnet.downloaded,
     size: magnet.size,
-    peers: magnet.peers,
+    peers: magnet.seeders,
     downloadSpeed: magnet.downloadSpeed, // Assuming 'downloadSpeed' property exists
   }));
 
@@ -73,7 +75,7 @@ function PendingTorrents() {
                   tooltipContent="Delete"
                   className="bg-red-600"
                   tooltipColor='danger'
-                  onClick={() => console.log('Delete button clicked')}
+                  onClick={() => deleteMagnet(item.id)}
                   icon={Trash2}
                 />
           );

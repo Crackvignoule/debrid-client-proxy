@@ -2,7 +2,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchLinks, saveLinks as apiSaveLinks, deleteLinks as apiDeleteLinks } from '../api';
+import { fetchLinks, saveLinks as apiSaveLinks, deleteLinks as apiDeleteLinks, deleteMagnet as apiDeleteMagnet } from '../api';
 import { Undo2 } from 'lucide-react';
 
 const useLinkManagement = () => {
@@ -63,7 +63,17 @@ const useLinkManagement = () => {
     }
   };
 
-  return { links, fetchLinks, saveLinks, deleteLinks, setRefreshKey };
+  const deleteMagnet = async (id) => {
+    // doesnt use refreshKey, so no need to update it
+    try {
+      await apiDeleteMagnet(id);
+      toast.success("Magnet deleted successfully!");
+    } catch (error) {
+      toast.error("Could not delete magnet.");
+    }
+  };
+
+  return { links, fetchLinks, saveLinks, deleteLinks, setRefreshKey, deleteMagnet };
 };
 
 export default useLinkManagement;

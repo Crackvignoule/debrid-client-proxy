@@ -1,7 +1,7 @@
 import { checkApiKey, auth, checkPin } from "./apiKey";
 import getMagnetID from "./getMagnetId";
 import { debridLinks, debridMagnet } from "./debrid";
-import { fetchLinks, deleteLinks, saveLinks, getHistory } from "./manageLinks";
+import { fetchLinks, deleteLinks, saveLinks, deleteMagnet, getHistory } from "./manageLinks";
 
 export {
   auth,
@@ -11,6 +11,7 @@ export {
   saveLinks,
   debridLinks,
   debridMagnet,
+  deleteMagnet,
   fetchLinks,
   deleteLinks,
   getHistory,

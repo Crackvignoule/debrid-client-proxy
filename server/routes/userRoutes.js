@@ -70,4 +70,14 @@ router.get('/deleteLink', extractApiKey, asyncHandler(async (req, res) => {
   });
 }));
 
+router.get('/deleteMagnet', extractApiKey, asyncHandler(async (req, res) => {
+  await generateResponse({
+    req,
+    res,
+    endpoint: 'magnet/delete',
+    queryParams: { apikey: req.apiKey, id: req.query.id },
+    formatResponse: response => ({ success: response.status === 'success' })
+  });
+}));
+
 module.exports = router;

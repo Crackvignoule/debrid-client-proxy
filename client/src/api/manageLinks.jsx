@@ -35,6 +35,12 @@ export const fetchLinks = () => {
     return axios.get(`${PrefixUrl}/api/user/getSavedLinks`, { headers });
   };
 
+export const deleteMagnet = async (id) => {
+    const apiKey = localStorage.getItem("apiKey");
+    const headers = { "api-key": apiKey };
+    return axios.get(`${PrefixUrl}/api/user/deleteMagnet`, { headers, params: { id } });
+};
+
 export const getHistory = async () => {
     const apiKey = localStorage.getItem("apiKey");
     const headers = { "api-key": apiKey };
