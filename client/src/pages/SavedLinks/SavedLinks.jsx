@@ -68,6 +68,8 @@ function SavedLinks() {
                 />
                 <ActionButton
                   tooltipContent="Delete"
+                  className="bg-red-600"
+                  tooltipColor='danger'
                   onClick={() => deleteLinks(item.link)}
                   icon={Trash2}
                 />

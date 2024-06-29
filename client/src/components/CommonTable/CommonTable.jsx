@@ -5,7 +5,7 @@ function CommonTable({ columns, items, renderCell }) {
     <Table aria-label="Results Table" className="text-cadet-grey">
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn className="text-rich-black" key={column.key}>
+          <TableColumn className={`text-rich-black ${column.class}`} key={column.key}>
             {column.label}
           </TableColumn>
         )}
