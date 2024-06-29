@@ -1,4 +1,4 @@
-![Debrid Client Proxy](https://i.imgur.com/zaLnApz.png)
+![Debrid Client Proxy](https://i.imgur.com/7VgRXsR.png)
 
 <div align="center">
 
