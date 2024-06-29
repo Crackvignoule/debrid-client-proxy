@@ -11,8 +11,8 @@ function NavBar() {
       </NavLink>
       <div className="navbar__links">
         <NavLink className={({ isActive }) => isActive ? "navbar__link navbar__link--active" : "navbar__link"} to="/">Home</NavLink>
-        <NavLink className={({ isActive }) => isActive ? "navbar__link navbar__link--active" : "navbar__link"} to="/pending-torrents">Pending Torrents</NavLink>
         <NavLink className={({ isActive }) => isActive ? "navbar__link navbar__link--active" : "navbar__link"} to="/saved-links">Saved Links</NavLink>
+        <NavLink className={({ isActive }) => isActive ? "navbar__link navbar__link--active" : "navbar__link"} to="/pending-torrents">Pending Torrents</NavLink>
         <NavLink className={({ isActive }) => isActive ? "navbar__link navbar__link--active" : "navbar__link"} to="/history">History</NavLink>
       </div>
       <NavLink className="navbar__settings" to="/settings">

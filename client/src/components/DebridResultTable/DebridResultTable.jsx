@@ -36,7 +36,8 @@ function DebridResultTable({ debridResult }) {
               no: index + 1,
             }))}
             renderCell={(item, columnKey) => {
-              if (columnKey === "actions") {
+            switch (columnKey) {
+              case "actions":
                 return (
                   <div className="flex items-center gap-2.5">
                     <ActionButton tooltipContent="Download" onClick={() => window.open(item.debridedLink)} icon={Download} />
@@ -44,22 +45,22 @@ function DebridResultTable({ debridResult }) {
                     <ActionButton tooltipContent="Copy Link" onClick={() => copyToClipboard(item.debridedLink)} icon={Copy} />
                   </div>
                 );
-              } else if (columnKey === "filename") {
+              case "filename":
                 return (
                   <Tooltip content={item.filename} color="foreground" showArrow={true}>
                     <span className="truncate max-w-sm block">{item.filename}</span>
                   </Tooltip>
                 );
-              } else if (columnKey === "debridedLink") {
+              case "debridedLink":
                 return (
                   <a href={item.debridedLink} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
                     {item.debridedLink}
                   </a>
                 );
-              } else {
+              default:
                 return item[columnKey];
-              }
-            }}
+            }
+          }}
           />
         </>
       )}

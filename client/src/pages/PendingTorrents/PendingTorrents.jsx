@@ -83,7 +83,6 @@ function PendingTorrents() {
         return item[columnKey];
     }
   };
-// TODO Use switch case instead of if-else
   return (
     <div>
       <CommonTable columns={columns} items={items} renderCell={renderCell} />

@@ -56,27 +56,28 @@ function SavedLinks() {
           no: indexOfFirstItem + index + 1,
         }))}
         renderCell={(item, columnKey) => {
-          if (columnKey === "filename") {
-            return <>{item.filename}</>;
-          } else if (columnKey === "actions") {
-            return (
-              <div className="flex items-center gap-2.5">
-                <ActionButton
-                  tooltipContent="Debrid"
-                  onClick={() => handleDebridClick(item.link)}
-                  icon={Download}
-                />
-                <ActionButton
-                  tooltipContent="Delete"
-                  className="bg-red-600"
-                  tooltipColor='danger'
-                  onClick={() => deleteLinks(item.link)}
-                  icon={Trash2}
-                />
-              </div>
-            );
-          } else {
-            return item[columnKey];
+          switch (columnKey) {
+            case "filename":
+              return item.filename;
+            case "actions":
+              return (
+                <div className="flex items-center gap-2.5">
+                  <ActionButton
+                    tooltipContent="Debrid"
+                    onClick={() => handleDebridClick(item.link)}
+                    icon={Download}
+                  />
+                  <ActionButton
+                    tooltipContent="Delete"
+                    className="bg-red-600"
+                    tooltipColor="danger"
+                    onClick={() => deleteLinks(item.link)}
+                    icon={Trash2}
+                  />
+                </div>
+              );
+            default:
+              return item[columnKey];
           }
         }}
       />
