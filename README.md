@@ -55,7 +55,7 @@ docker run -dit \
 ### Installing dependencies and running
 
 ```bash
-cd server; npm i; cd ../client; npm i; cd ..; npm i
+npm i
 npm run dev
 ```
 

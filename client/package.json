@@ -1,7 +1,6 @@
 {
   "name": "debridclientproxy",
-  "private": true,
-  "version": "0.5.0",
+  "version": "0.5.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
