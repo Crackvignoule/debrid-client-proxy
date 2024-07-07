@@ -17,4 +17,22 @@
       margin-right: 1rem;
     }
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .textarea {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: auto;
+      &:first-of-type {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  }
 }

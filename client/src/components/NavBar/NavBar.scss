@@ -51,6 +51,28 @@
     }
 }
 
+@media (max-width: 768px) {
+  .navbar .navbar__links {
+    gap: 0.33rem;
+  }
+
+  .navbar {
+    min-height: 6rem;
+    padding: 1rem;
+  }
+
+  .navbar__links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .navbar__link {
+      flex: 1 1 40%;
+      text-align: center;
+    }
+  }
+}
+
 // TODO INCLUDE WEBKIT AND MOZ FOR BROWSER COMPATIBILITY ?
 @keyframes moveGradient {
   0% {

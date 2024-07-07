@@ -13,6 +13,11 @@ $blur-offset: 5px;
     height: 100%;
     margin: auto;
     margin-top: 2%;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        margin-top: 10%;
+      }
 }
   
 .inputs-container {
@@ -21,7 +26,11 @@ $blur-offset: 5px;
     gap: 2rem;
     width: 90%;
     margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
   }
+}
   
 .file-upload-container,
 .textarea-container {
