@@ -2,7 +2,9 @@
   "name": "debrid-client-proxy",
   "version": "0.5.5",
   "scripts": {
-    "postinstall": "npm --prefix ./server install ./server && npm --prefix ./client install ./client",
+    "postinstall": "npm run install:client && npm run install:server ",
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
     "client": "cd client && npm run dev",
     "server": "cd server && nodemon server.js",
     "dev": "concurrently --kill-others \"npm run server\" \"npm run client\""
