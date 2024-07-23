@@ -53,4 +53,5 @@ $gradient-radial: radial-gradient(#000e18ff, #001524ff, #2c7da0ff, #63e7d8ff, #f
 /* Override Tailwind defaults */
 html, body {
   margin: 0.3rem !important;
+  width: fit-content;
 }
