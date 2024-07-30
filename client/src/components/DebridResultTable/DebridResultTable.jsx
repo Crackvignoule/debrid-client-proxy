@@ -24,7 +24,7 @@ function DebridResultTable({ debridResult }) {
     <>
       {debridResult.length > 0 && (
         <>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center justify-center gap-2.5">
             <ActionButton tooltipContent="Download All" onClick={() => downloadAllLinks(debridResult)} icon={HardDriveDownload} />
             <ActionButton tooltipContent="Save all on AD" onClick={handleSaveAllLinks} icon={SaveAll} />
             <ActionButton tooltipContent="Export .txt" onClick={() => exportLinksAsTxt(debridResult)} icon={FileDown} />
