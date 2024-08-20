@@ -44,7 +44,7 @@ router.get('/history', extractApiKey, asyncHandler(async (req, res) => {
     res,
     endpoint: 'user/history',
     queryParams: { apikey: req.apiKey },
-    formatResponse: response => ({ history: response.data.links })
+    formatResponse: response => ({ history: response.data.links.reverse() })
   });
 }));
 
