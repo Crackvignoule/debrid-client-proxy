@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Pagination, Tooltip } from "@nextui-org/react";
-import { useLinkManagement } from '@hooks';
+import { useLinkManagement, usePaginationAndSearch } from '@hooks';
 import { SearchBar, CommonTable, ActionButton } from '@components';
 import { Download, Save, Copy } from 'lucide-react';
 import { copyToClipboard } from '@utils';
 
 function History() {
   const { history, saveLinks } = useLinkManagement();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
   const itemsPerPage = 10;
 
   const columns = [
@@ -17,22 +15,13 @@ function History() {
     { key: "actions", label: "Actions" },
   ];
 
-  // Filter history based on the search query before slicing for pagination
-  const filteredHistory = history.filter(item => 
-    item.filename.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredHistory.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (page) => setCurrentPage(page);
-
-  // Update the search query state on input change
-  const handleSearchChange = (e) => {
-    setSearchQuery(e);
-    setCurrentPage(1); // Reset to the first page to show filtered results from the beginning
-  };
+  const {
+    currentItems,
+    handlePageChange,
+    handleSearchChange,
+    searchQuery,
+    totalPages,
+  } = usePaginationAndSearch(history, itemsPerPage);
 
   return (
     <div>
@@ -47,7 +36,7 @@ function History() {
             columns={columns}
             items={currentItems.map((item, index) => ({
               ...item,
-              no: indexOfFirstItem + index + 1,
+              no: index + 1,
             }))}
             renderCell={(item, columnKey) => {
               switch (columnKey) {
@@ -88,7 +77,7 @@ function History() {
               }
             }}
           />
-          <Pagination total={Math.ceil(filteredHistory.length / itemsPerPage)} initialPage={1} onChange={handlePageChange} />
+          <Pagination total={totalPages} initialPage={1} onChange={handlePageChange} />
         </>
       ) : (
         <p>No history available. You HAVE to enable history links logging in your account settings before seeing any links being saved in this recent history. Recent link logging is disabled by default.</p>

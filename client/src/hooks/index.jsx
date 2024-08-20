@@ -4,5 +4,6 @@ import { useDebrid } from "./useDebrid";
 import useDebridState from "./useDebridState";
 import useLinkManagement from "./useLinkManagement";
 import useLiveStatus from "./useLiveStatus";
+import usePaginationAndSearch from "./usePaginationAndSearch";
 
-export { useApiKey, useDebrid, useDebridState, useLinkManagement, useLiveStatus };
+export { useApiKey, useDebrid, useDebridState, useLinkManagement, useLiveStatus, usePaginationAndSearch };
