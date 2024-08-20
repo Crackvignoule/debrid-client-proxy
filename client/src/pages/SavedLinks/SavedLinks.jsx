@@ -1,11 +1,11 @@
 // TODO Refactor
 // TODO Add multi select delete (add confirmation prompt) & debrid
 import { useState } from 'react';
-import { Pagination, Input } from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 import { useLinkManagement } from '@hooks';
 import { useNavigate } from 'react-router-dom';
-import { CommonTable, ActionButton } from '@components';
-import { Download, Search, Trash2 } from 'lucide-react';
+import { SearchBar, CommonTable, ActionButton } from '@components';
+import { Download, Trash2 } from 'lucide-react';
 
 function SavedLinks() {
   const navigate = useNavigate();
@@ -41,13 +41,11 @@ function SavedLinks() {
   };
 
   return (
-    // TODO Search bar as global component
     <>
-      <Input
+      <SearchBar
         placeholder="Search"
-        className="m-5 w-1/2 mx-auto text-rich-black"
-        startContent={<Search />}
-        onValueChange={handleSearchChange}
+        value={searchQuery}
+        onChange={handleSearchChange}
       />
       <CommonTable
         columns={columns}

@@ -1,3 +1,4 @@
+// TODO Add Scraper Page ? Add RD support ?
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {NextUIProvider} from "@nextui-org/react";

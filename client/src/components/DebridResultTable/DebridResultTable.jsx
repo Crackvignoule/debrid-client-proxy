@@ -51,7 +51,7 @@ function DebridResultTable({ debridResult }) {
                     <span className="truncate max-w-sm block">{item.filename}</span>
                   </Tooltip>
                 );
-              case "debridedLink":
+              case "link_dl":
                 return (
                   <a href={item.link_dl} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
                     {item.link_dl}
