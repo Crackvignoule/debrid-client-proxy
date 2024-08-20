@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { useApiKey } from "../../hooks";
-import { version } from "../../../package.json";
+import { useApiKey } from "@hooks";
+import { version } from "@/../package.json";
 import "./Settings.scss";
 
 function Settings() {

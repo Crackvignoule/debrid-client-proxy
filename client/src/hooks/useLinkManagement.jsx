@@ -2,12 +2,13 @@ import { toast } from 'react-hot-toast';
 import { Button } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchLinks, saveLinks as apiSaveLinks, deleteLinks as apiDeleteLinks, deleteMagnet as apiDeleteMagnet } from '../api';
+import { fetchLinks, saveLinks as apiSaveLinks, deleteLinks as apiDeleteLinks, deleteMagnet as apiDeleteMagnet, getHistory as apiGetHistory } from '@api';
 import { Undo2 } from 'lucide-react';
 
 const useLinkManagement = () => {
   const location = useLocation();
   const [links, setLinks] = useState([]);
+  const [history, setHistory] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);  // Used to trigger re-fetch
 
   // Removed toast, revert: 4a04cf7:
@@ -26,6 +27,22 @@ const useLinkManagement = () => {
       loadLinks();
     }
   }, [location.pathname, refreshKey]);
+
+  // Fetch history when on the history page
+  useEffect(() => {
+    if (location.pathname === "/history") {
+      const loadHistory = async () => {
+        try {
+          const response = await apiGetHistory();
+          setHistory(response);
+        } catch (error) {
+          console.error("Error fetching history", error);
+        }
+      };
+
+      loadHistory();
+    }
+  }, [location.pathname]);
 
   const saveLinks = (linksToSave) => {
     return toast.promise(apiSaveLinks(linksToSave), {
@@ -73,7 +90,7 @@ const useLinkManagement = () => {
     }
   };
 
-  return { links, fetchLinks, saveLinks, deleteLinks, setRefreshKey, deleteMagnet };
+  return { links, fetchLinks, saveLinks, deleteLinks, setRefreshKey, deleteMagnet, history };
 };
 
 export default useLinkManagement;

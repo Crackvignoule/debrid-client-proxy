@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { checkApiKey, auth, checkPin } from "../api";
+import { checkApiKey, auth, checkPin } from "@api";
 
 const RETRY_DELAY_MS = 2000; // Retry delay in milliseconds
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import { getMagnetID, debridLinks, debridMagnet } from '../api';
+import { getMagnetID, debridLinks, debridMagnet } from '@api';
 import { Button } from "@nextui-org/react";
 
 

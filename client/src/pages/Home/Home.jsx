@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Textarea, Button } from "@nextui-org/react";
-import { FileUpload, DebridResultTable } from "../../components";
-import { useDebrid, useDebridState } from "../../hooks";
+import { FileUpload, DebridResultTable } from "@components";
+import { useDebrid, useDebridState } from "@hooks";
 import { useLocation } from 'react-router-dom';
 import "./Home.scss";
 

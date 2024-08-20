@@ -38,7 +38,7 @@ export const debridLinks = async (links) => {
     const result = debridedLinks.map((item, index) => ({
       filename: item.filename,
       link: links[index],
-      debridedLink: item.link,
+      link_dl: item.link,
     }));
     return result;
   } catch (error) {

@@ -2,9 +2,9 @@
 // TODO Add multi select delete (add confirmation prompt) & debrid
 import { useState } from 'react';
 import { Pagination, Input } from "@nextui-org/react";
-import { useLinkManagement } from '../../hooks';
+import { useLinkManagement } from '@hooks';
 import { useNavigate } from 'react-router-dom';
-import { CommonTable, ActionButton } from '../../components';
+import { CommonTable, ActionButton } from '@components';
 import { Download, Search, Trash2 } from 'lucide-react';
 
 function SavedLinks() {

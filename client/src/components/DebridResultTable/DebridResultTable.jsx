@@ -1,7 +1,7 @@
 import { Tooltip } from '@nextui-org/react';
-import { CommonTable, ActionButton } from '..';
-import { useLinkManagement } from '../../hooks';
-import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '../../utils';
+import { CommonTable, ActionButton } from '@components';
+import { useLinkManagement } from '@hooks';
+import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '@utils';
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
 
 
@@ -16,7 +16,7 @@ function DebridResultTable({ debridResult }) {
   const columns = [
     { key: "no", label: "No." },
     { key: "filename", label: "Filename" },
-    { key: "debridedLink", label: "Debrided Link" },
+    { key: "link_dl", label: "Debrided Link" },
     { key: "actions", label: "Actions" },
   ];
   
@@ -40,9 +40,9 @@ function DebridResultTable({ debridResult }) {
               case "actions":
                 return (
                   <div className="flex items-center gap-2.5">
-                    <ActionButton tooltipContent="Download" onClick={() => window.open(item.debridedLink)} icon={Download} />
+                    <ActionButton tooltipContent="Download" onClick={() => window.open(item.link_dl)} icon={Download} />
                     <ActionButton tooltipContent="Save on AD" onClick={() => saveLinks([item.link])} icon={Save} />
-                    <ActionButton tooltipContent="Copy Link" onClick={() => copyToClipboard(item.debridedLink)} icon={Copy} />
+                    <ActionButton tooltipContent="Copy Link" onClick={() => copyToClipboard(item.link_dl)} icon={Copy} />
                   </div>
                 );
               case "filename":
@@ -53,8 +53,8 @@ function DebridResultTable({ debridResult }) {
                 );
               case "debridedLink":
                 return (
-                  <a href={item.debridedLink} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
-                    {item.debridedLink}
+                  <a href={item.link_dl} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
+                    {item.link_dl}
                   </a>
                 );
               default:

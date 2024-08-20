@@ -7,7 +7,7 @@ const copyToClipboard = (link) => {
   };
 
   const exportLinksAsTxt = (debridResult) => {
-    const allLinks = debridResult.map(item => item.debridedLink).join('\n');
+    const allLinks = debridResult.map(item => item.link_dl).join('\n');
     const blob = new Blob([allLinks], { type: 'text/plain' });
     const href = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -23,7 +23,7 @@ const copyToClipboard = (link) => {
     debridResult.forEach((item, index) => {
       const iframe = document.createElement('iframe');
       iframe.style.display = 'none';
-      iframe.src = item.debridedLink;
+      iframe.src = item.link_dl;
       iframe.id = `downloadIframe-${index}`;
       document.body.appendChild(iframe);
     });

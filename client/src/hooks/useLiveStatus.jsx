@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getLiveStatus } from '../api/debrid';
+import { getLiveStatus } from '@api/debrid';
 
 function useLiveStatus() {
   const [sessionId] = useState(Math.floor(Math.random() * 10000));

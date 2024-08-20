@@ -1,7 +1,7 @@
-import useLiveStatus from '../../hooks/useLiveStatus';
-import { CommonTable, ActionButton } from '../../components';
+import useLiveStatus from '@hooks/useLiveStatus';
+import { CommonTable, ActionButton } from '@components';
 import { Progress, Tooltip } from "@nextui-org/react";
-import { useLinkManagement } from '../../hooks';
+import { useLinkManagement } from '@hooks';
 import { Trash2 } from 'lucide-react';
 import "./PendingTorrents.scss";
 
