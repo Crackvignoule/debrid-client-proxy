@@ -36,7 +36,7 @@ function History() {
             columns={columns}
             items={currentItems.map((item, index) => ({
               ...item,
-              no: index + 1,
+              no: index,
             }))}
             renderCell={(item, columnKey) => {
               switch (columnKey) {

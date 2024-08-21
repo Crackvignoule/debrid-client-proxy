@@ -33,7 +33,7 @@ function DebridResultTable({ debridResult }) {
             columns={columns}
             items={debridResult.map((item, index) => ({
               ...item,
-              no: index + 1,
+              no: index,
             }))}
             renderCell={(item, columnKey) => {
             switch (columnKey) {
