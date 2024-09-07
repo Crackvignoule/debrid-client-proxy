@@ -1,12 +1,13 @@
 import { Tooltip } from '@nextui-org/react';
 import { CommonTable, ActionButton } from '@components';
-import { useLinkManagement } from '@hooks';
+import { useLinkManagement, useWindowResize } from '@hooks';
 import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '@utils';
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
-
+import './DebridResultTable.scss';
 
 function DebridResultTable({ debridResult }) {
   const { saveLinks } = useLinkManagement();
+  const isSmallScreen = useWindowResize();
 
   const handleSaveAllLinks = () => {
     const allLinks = debridResult.map(item => item.link);
@@ -14,12 +15,12 @@ function DebridResultTable({ debridResult }) {
   };
 
   const columns = [
-    { key: "no", label: "No." },
+    !isSmallScreen && { key: "no", label: "No." },
     { key: "filename", label: "Filename" },
-    { key: "link_dl", label: "Debrided Link" },
+    !isSmallScreen && { key: "link_dl", label: "Debrided Link" },
     { key: "actions", label: "Actions" },
-  ];
-  
+  ].filter(Boolean);
+
   return (
     <>
       {debridResult.length > 0 && (
@@ -36,31 +37,31 @@ function DebridResultTable({ debridResult }) {
               no: index,
             }))}
             renderCell={(item, columnKey) => {
-            switch (columnKey) {
-              case "actions":
-                return (
-                  <div className="flex items-center gap-2.5">
-                    <ActionButton tooltipContent="Download" onClick={() => window.open(item.link_dl)} icon={Download} />
-                    <ActionButton tooltipContent="Save on AD" onClick={() => saveLinks([item.link])} icon={Save} />
-                    <ActionButton tooltipContent="Copy Link" onClick={() => copyToClipboard(item.link_dl)} icon={Copy} />
-                  </div>
-                );
-              case "filename":
-                return (
-                  <Tooltip content={item.filename} color="foreground" showArrow={true}>
-                    <span className="truncate max-w-sm block">{item.filename}</span>
-                  </Tooltip>
-                );
-              case "link_dl":
-                return (
-                  <a href={item.link_dl} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
-                    {item.link_dl}
-                  </a>
-                );
-              default:
-                return item[columnKey];
-            }
-          }}
+              switch (columnKey) {
+                case "actions":
+                  return (
+                    <div className="flex items-center gap-2.5">
+                      <ActionButton tooltipContent="Download" onClick={() => window.open(item.link_dl)} icon={Download} />
+                      <ActionButton tooltipContent="Save on AD" onClick={() => saveLinks([item.link])} icon={Save} />
+                      <ActionButton tooltipContent="Copy Link" onClick={() => copyToClipboard(item.link_dl)} icon={Copy} />
+                    </div>
+                  );
+                case "filename":
+                  return (
+                    <Tooltip content={item.filename} color="foreground" showArrow={true}>
+                      <span className="truncate max-w-sm block" id="fname">{item.filename}</span>
+                    </Tooltip>
+                  );
+                case "link_dl":
+                  return (
+                    <a href={item.link_dl} target="_blank" rel="noopener noreferrer" className="block truncate max-w-xs">
+                      {item.link_dl}
+                    </a>
+                  );
+                default:
+                  return item[columnKey];
+              }
+            }}
           />
         </>
       )}

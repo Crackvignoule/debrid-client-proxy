@@ -5,5 +5,14 @@ import useDebridState from "./useDebridState";
 import useLinkManagement from "./useLinkManagement";
 import useLiveStatus from "./useLiveStatus";
 import usePaginationAndSearch from "./usePaginationAndSearch";
+import useWindowResize from "./useWindowResize";
 
-export { useApiKey, useDebrid, useDebridState, useLinkManagement, useLiveStatus, usePaginationAndSearch };
+export { 
+    useApiKey,
+    useDebrid,
+    useDebridState,
+    useLinkManagement,
+    useLiveStatus,
+    usePaginationAndSearch,
+    useWindowResize 
+};
