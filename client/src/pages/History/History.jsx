@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Pagination, Tooltip } from "@nextui-org/react";
-import { useLinkManagement, usePaginationAndSearch } from '@hooks';
+import { useLinkManagement, usePaginationAndSearch, useWindowResize } from '@hooks';
 import { SearchBar, CommonTable, ActionButton } from '@components';
 import { Download, Save, Copy } from 'lucide-react';
 import { copyToClipboard } from '@utils';
 
 function History() {
   const { history, saveLinks } = useLinkManagement();
+  const isSmallScreen = useWindowResize();
   const itemsPerPage = 10;
 
   const columns = [
     { key: "filename", label: "Filename" },
-    { key: "link_dl", label: "Debrided Link" },
+    !isSmallScreen && { key: "link_dl", label: "Debrided Link" },
     { key: "actions", label: "Actions" },
-  ];
+  ].filter(Boolean);
 
   const {
     currentItems,
@@ -43,7 +44,7 @@ function History() {
                 case "filename":
                   return (
                     <Tooltip content={item.filename} color="foreground" showArrow={true}>
-                      <span className="truncate max-w-sm block">{item.filename}</span>
+                      <span id="fname" className="truncate max-w-sm block">{item.filename}</span>
                     </Tooltip>
                   );
                 case "link_dl":

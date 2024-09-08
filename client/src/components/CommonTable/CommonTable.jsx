@@ -1,4 +1,5 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import './CommonTable.scss';
 
 function CommonTable({ columns, items, renderCell }) {
   return (

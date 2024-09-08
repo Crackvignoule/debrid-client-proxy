@@ -3,7 +3,6 @@ import { CommonTable, ActionButton } from '@components';
 import { useLinkManagement, useWindowResize } from '@hooks';
 import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '@utils';
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
-import './DebridResultTable.scss';
 
 function DebridResultTable({ debridResult }) {
   const { saveLinks } = useLinkManagement();
