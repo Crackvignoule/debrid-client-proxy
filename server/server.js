@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
 const apiRoutes = require("./routes/api");
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swaggerConfig');
+
 const app = express();
 
 let PrefixUrl = "";
@@ -14,6 +17,9 @@ app.use(express.json());
 
 // Use api routes with PrefixUrl prefix
 app.use(`${PrefixUrl}/api`, apiRoutes); // Now safe from double slashes
+
+// Serve Swagger docs
+app.use(`${PrefixUrl}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file, considering PrefixUrl.
