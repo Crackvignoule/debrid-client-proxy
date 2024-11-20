@@ -7,8 +7,8 @@ import "./Home.scss";
 
 function Home() {
   const { 
-    file, 
-    setFile,
+    files, 
+    setFiles,
     links, 
     setLinks, 
     isFileDisabled, 
@@ -21,9 +21,9 @@ function Home() {
   const [isDebridTriggered, setIsDebridTriggered] = useState(false);
 
   useEffect(() => {
-    setIsLinksDisabled(!!file);
+    setIsLinksDisabled(!!files);
     setIsFileDisabled(!!links);
-  }, [file, links, setIsFileDisabled, setIsLinksDisabled]);
+  }, [files, links, setIsFileDisabled, setIsLinksDisabled]);
 
   useEffect(() => {
     if (location.state?.link && !isDebridTriggered) {
@@ -39,8 +39,8 @@ function Home() {
       <div className="inputs-container">
         <div className="file-upload-container">
           <FileUpload
-            file={file}
-            setFile={setFile}
+            files={files}
+            setFiles={setFiles}
             disabled={isFileDisabled}
             uploadProgress={uploadProgress}
           />
@@ -61,9 +61,9 @@ function Home() {
       </div>
       <div className="button-container">
         <Button
-          onClick={() => debrid(file || links)}
+          onClick={() => debrid(files || links)}
           radius="full"
-          isDisabled={!file && !links}
+          isDisabled={!files && !links}
           className="mb-3 bg-gradient-to-tr from-indigo-500 from-10% via-cerulean via-50% to-turquoise to-90%"
         >
           Debrid

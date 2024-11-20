@@ -18,14 +18,14 @@ export function useDebrid() {
   
   const debrid = (linksOrFile) => {
     // Split links by newline + Filter out empty newlines
-    const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : [linksOrFile];
+    const linksOrFiles = typeof linksOrFile === 'string' ? linksOrFile.split('\n') : linksOrFile;
     const filteredLinksOrFiles = linksOrFiles.filter(linkOrFile => {
       if (typeof linkOrFile === 'string') {
         return linkOrFile.trim() !== '';
       }
       return true; // file path doesn't need to be filtered
     });
-
+  
     // Debrid each link or file (mapping each to a promise)
     const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
       // If it's a link
@@ -41,7 +41,7 @@ export function useDebrid() {
         const onProgress = isFile ? (progress) => {
           setUploadProgress(progress);
         } : undefined;
-
+  
         // Get magnet ID and debrid
         return getMagnetID(linkOrFile, onProgress) // Pass onProgress only if it's a file
           .then(magnetID => {

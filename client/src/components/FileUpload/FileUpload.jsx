@@ -5,16 +5,15 @@ import { Upload } from 'lucide-react';
 import "./FileUpload.scss";
 
 
-function FileUpload({ file, setFile, disabled, uploadProgress }) {
+function FileUpload({ files, setFiles, disabled, uploadProgress }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       "application/x-bittorrent": [".torrent"],
     },
-    maxFiles: 1,
     onDrop: (acceptedFiles) => {
-      setFile(acceptedFiles[0]);
+      setFiles(acceptedFiles);
     },
-    disabled
+    multiple: true,
   });
   // Conditional class or style
   const dropzoneClass = `file-upload ${disabled ? "disabled" : ""} ${isDragActive ? "hover-style" : ""}`;
@@ -28,7 +27,7 @@ function FileUpload({ file, setFile, disabled, uploadProgress }) {
         <input {...getInputProps()} />
         <Upload size={24} />
         <p>Upload File</p>
-        {file && <p>Selected file: {file.name}</p>}
+        {files && <p>loaded torrents: {files.length}</p>}
       </div>
       <Progress
         size="sm"

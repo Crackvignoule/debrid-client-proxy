@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 function useDebridState() {
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState();
   const [links, setLinks] = useState('');
   const [isFileDisabled, setIsFileDisabled] = useState(false);
   const [isLinksDisabled, setIsLinksDisabled] = useState(false);
 
   return { 
-    file, 
-    setFile,
+    files, 
+    setFiles,
     links, 
     setLinks, 
     isFileDisabled, 
