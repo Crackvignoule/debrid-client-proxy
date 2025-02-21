@@ -31,23 +31,15 @@ describe('Debrid Routes', () => {
 
   describe('/getMagnetID', () => {
     it('should get magnet ID from magnet link', async () => {
-    //   const response = await request(app)
-    //     .post('/getMagnetID')
-    //     .set('api-key', API_KEY)
-    //     .send({ magnetLink: 'magnet:?xt=urn:btih:abcdef' });
-    //   expect(response.status).toBe(200);
-    //   expect(response.body).toHaveProperty('id');
-    expect(true).toBe(true);
-    });
-
-    it('should get magnet ID from torrent file', async () => {
-    //   const response = await request(app)
-    //     .post('/getMagnetID')
-    //     .set('api-key', API_KEY)
-    //     .attach('torrent', Buffer.from('dummy torrent content'), 'test.torrent');
-    //   expect(response.status).toBe(200);
-    //   expect(response.body).toHaveProperty('id');
-    expect(true).toBe(true);
+      const response = await request(app)
+        .post('/getMagnetID')
+        .set('api-key', API_KEY)
+        .send({ magnetLink: 'magnet:?xt=urn:btih:SJFI2DUJGWHWMSLZPCO4Q27JUP23JLCM&dn=pluto_t6_full_game&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce' });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('id');
+      expect(response.body.id).toBeDefined();
+      // id should be a number 
+      expect(typeof response.body.id).toBe('number');
     });
   });
 
