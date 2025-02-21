@@ -156,7 +156,7 @@ router.post("/debridLinks", extractApiKey, asyncHandler(async (req, res) => {
  *                   type: string
  *     responses:
  *       200:
- *         description: Links saved successfully
+ *         description: Links were sucessfully saved
  *         content:
  *           application/json:
  *             schema:
