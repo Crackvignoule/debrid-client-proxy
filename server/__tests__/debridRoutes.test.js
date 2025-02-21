@@ -3,7 +3,7 @@ dotenv.config();
 
 import express from 'express';
 import request from 'supertest';
-import { beforeAll, describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import debridRoutes from '../routes/debridRoutes';
 
 const API_KEY = process.env.API_KEY;
@@ -14,7 +14,11 @@ app.use(debridRoutes);
 let validLink;
 
 beforeAll(async () => {
-  const response = await fetch('https://1fichier.com/?p8xpzk72gcqunynurm2p');
+  const response = await fetch('https://1fichier.com/?p8xpzk72gcqunynurm2p', {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/90.0.4430.85 Safari/537.36'
+    }
+  });
   if (response.status === 200) {
     validLink = 'https://1fichier.com/?p8xpzk72gcqunynurm2p';
   }
