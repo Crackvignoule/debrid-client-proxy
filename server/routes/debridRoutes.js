@@ -150,12 +150,10 @@ router.post("/debridLinks", extractApiKey, asyncHandler(async (req, res) => {
   const { links } = req.body;
   const debridedLinks = [];
 
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   for (const link of links) {
     const apiEndpoint = createApiEndpoint('link/unlock', { apikey: req.apiKey, link });
     const response = await apiCall('GET', apiEndpoint);
     debridedLinks.push(response.data);
-    await delay(100);
   }
 
   res.json({ debridedLinks });
