@@ -27,7 +27,7 @@ function FileUpload({ files, setFiles, disabled, uploadProgress }) {
         <input {...getInputProps()} />
         <Upload size={24} />
         <p>Upload File</p>
-        {files && <p>loaded torrents: {files.length}</p>}
+        {files && <p>Number of files: {files.length}</p>}
       </div>
       <Progress
         size="sm"

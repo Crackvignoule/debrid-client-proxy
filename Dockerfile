@@ -2,7 +2,6 @@
 FROM node:current-alpine AS build
 WORKDIR /usr/src/app
 COPY client/package*.json ./
-ENV NODE_ENV=production
 RUN npm install
 COPY client/ ./
 RUN npm run build

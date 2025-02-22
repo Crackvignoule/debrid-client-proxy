@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/react";
 
 
 function isValidMagnetLink(link) {
-  const magnetURI = /^magnet:\?xt=urn:btih:[a-zA-Z0-9]{40,}/;
+  const magnetURI = /^magnet:\?xt=urn:btih:[a-zA-Z0-9]{32,}/;
   return magnetURI.test(link);
 }
 

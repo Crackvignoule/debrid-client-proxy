@@ -3,7 +3,7 @@ dotenv.config();
 
 import express from 'express';
 import request from 'supertest';
-import { describe, it, expect, beforeAll } from 'vitest';
+import { beforeAll, describe, it, expect } from 'vitest';
 import debridRoutes from '../routes/debridRoutes';
 
 const API_KEY = process.env.API_KEY;
@@ -12,15 +12,20 @@ app.use(express.json());
 app.use(debridRoutes);
 
 let validLink;
+let validMagnet;
+
+function isValidMagnetLink(link) {
+  const magnetURI = /^magnet:\?xt=urn:btih:[a-zA-Z0-9]{32,}/;
+  return magnetURI.test(link);
+}
 
 beforeAll(async () => {
-  const response = await fetch('https://1fichier.com/?p8xpzk72gcqunynurm2p', {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/90.0.4430.85 Safari/537.36'
-    }
-  });
+  const response = await fetch('https://1fichier.com/?p8xpzk72gcqunynurm2p');
   if (response.status === 200) {
     validLink = 'https://1fichier.com/?p8xpzk72gcqunynurm2p';
+  }
+  if (isValidMagnetLink('magnet:?xt=urn:btih:SJFI2DUJGWHWMSLZPCO4Q27JUP23JLCM&dn=pluto_t6_full_game&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce')) {
+    validMagnet = 'magnet:?xt=urn:btih:SJFI2DUJGWHWMSLZPCO4Q27JUP23JLCM&dn=pluto_t6_full_game&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce';
   }
 });
 
@@ -29,12 +34,17 @@ describe('Debrid Routes', () => {
     expect(validLink).not.toBeUndefined();
   });
 
+  it('should have a valid magnet link', () => {
+    expect(validMagnet).not.toBeUndefined();
+  });
+
   describe('/getMagnetID', () => {
     it('should get magnet ID from magnet link', async () => {
+      expect(validMagnet).not.toBeUndefined();
       const response = await request(app)
         .post('/getMagnetID')
         .set('api-key', API_KEY)
-        .send({ magnetLink: 'magnet:?xt=urn:btih:SJFI2DUJGWHWMSLZPCO4Q27JUP23JLCM&dn=pluto_t6_full_game&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce' });
+        .send({ magnetLink: validMagnet });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('id');
       expect(response.body.id).toBeDefined();
