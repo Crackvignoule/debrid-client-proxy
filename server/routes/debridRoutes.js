@@ -91,11 +91,28 @@ router.post('/getMagnetID', extractApiKey, upload.single('torrent'), asyncHandle
  *       400:
  *         description: Bad request
  */
+// const extractLinks = (nodes) => {
+//   let links = [];
+
+//   nodes.forEach(node => {
+//     if (node.e) {
+//       // If the node has sub-nodes, recursively extract links from them
+//       links = links.concat(extractLinks(node.e));
+//     } else if (node.l) {
+//       // If the node is a file, add its link to the list
+//       links.push(node.l);
+//     }
+//   });
+
+//   return links;
+// };
+
 router.post('/getLinksFromMagnet', extractApiKey, asyncHandler(async (req, res) => {
   const { magnetID } = req.body;
   const apiEndpoint = createApiEndpoint('magnet/status', { apikey: req.apiKey, id: magnetID });
   const response = await apiCall('GET', apiEndpoint);
-  res.json({ links: response.data.magnets.links, statusCode: response.data.magnets.statusCode });
+  const links = response.data.magnets.links;
+  res.json({ links: links, statusCode: response.data.magnets.statusCode });
 }));
 
 /**
@@ -131,10 +148,16 @@ router.post('/getLinksFromMagnet', extractApiKey, asyncHandler(async (req, res) 
  */
 router.post("/debridLinks", extractApiKey, asyncHandler(async (req, res) => {
   const { links } = req.body;
-  const debridedLinks = await Promise.all(links.map(link => {
+  const debridedLinks = [];
+
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  for (const link of links) {
     const apiEndpoint = createApiEndpoint('link/unlock', { apikey: req.apiKey, link });
-    return apiCall('GET', apiEndpoint).then(response => response.data);
-  }));
+    const response = await apiCall('GET', apiEndpoint);
+    debridedLinks.push(response.data);
+    await delay(100);
+  }
+
   res.json({ debridedLinks });
 }));
 

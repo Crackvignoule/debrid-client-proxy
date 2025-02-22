@@ -16,6 +16,7 @@ export const debridMagnet = async (magnetID) => {
       return { isPending: true };
     }
 
+    console.log(links.map((linkObj) => linkObj.link).join("\n"));
     const debridedLinks = await debridLinks(
       links.map((linkObj) => linkObj.link)
     );
