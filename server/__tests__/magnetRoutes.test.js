@@ -1,27 +1,27 @@
-// import request from 'supertest';
-// import { describe, it, expect } from 'vitest';
-// import app from '../app'; 
+import dotenv from 'dotenv';
+dotenv.config();
 
-// describe('Magnet Routes', () => {
-//     it('should return a list of magnets', async () => {
-//         const response = await request(app).get('/api/magnets');
-//         expect(response.status).toBe(200);
-//         expect(response.body).toBeInstanceOf(Array);
-//     });
-
-//     it('should create a new magnet', async () => {
-//         const newMagnet = { name: 'Test Magnet' };
-//         const response = await request(app).post('/api/magnets').send(newMagnet);
-//         expect(response.status).toBe(201);
-//         expect(response.body.name).toBe(newMagnet.name);
-//     });
-// });
+import express from 'express';
+import request from 'supertest';
 import { describe, it, expect } from 'vitest';
+import magnetRoutes from '../routes/magnetRoutes';
+
+const API_KEY = process.env.API_KEY;
+const app = express();
+app.use(express.json());
+app.use(magnetRoutes);
 
 // /status
 describe('Magnet Routes', () => {
     it('should get magnet status', async () => {
-        expect(true).toBe(true);
+        const sessionId = 1000;
+        const counter = 1;
+        const response = await request(app)
+            .get('/status')
+            .set('api-key', API_KEY)
+            .query({ session: sessionId, counter });
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('magnets');
     });
 });
 
