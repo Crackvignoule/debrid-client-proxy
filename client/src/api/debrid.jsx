@@ -2,7 +2,7 @@ import axios from "axios";
 
 const PrefixUrl = window.RUNTIME_CONFIG.URL_PREFIX;
 
-export const debridMagnet = async (magnetID) => {
+export const debridMagnet = async (magnetID, onProgress) => {
   const proxyEndpoint = `${PrefixUrl}/api/debrid/getLinksFromMagnet`;
   const apiKey = localStorage.getItem("apiKey");
   const headers = { "api-key": apiKey };
@@ -16,10 +16,8 @@ export const debridMagnet = async (magnetID) => {
       return { isPending: true };
     }
 
-    console.log(links.map((linkObj) => linkObj.link).join("\n"));
-    const debridedLinks = await debridLinks(
-      links.map((linkObj) => linkObj.link)
-    );
+    const mappedLinks = links.map((linkObj) => linkObj.link);
+    const debridedLinks = await debridLinks(mappedLinks, onProgress);
 
     return debridedLinks;
   } catch (error) {
@@ -28,24 +26,32 @@ export const debridMagnet = async (magnetID) => {
   }
 };
 
-export const debridLinks = async (links) => {
+export const debridLink = async (link) => {
   const apiKey = localStorage.getItem("apiKey");
   const headers = { "api-key": apiKey };
-  const proxyEndpoint = `${PrefixUrl}/api/debrid/debridLinks`;
+  const proxyEndpoint = `${PrefixUrl}/api/debrid/debridLink`;
 
-  try {
-    const response = await axios.post(proxyEndpoint, { links }, { headers });
-    const debridedLinks = response.data.debridedLinks;
-    const result = debridedLinks.map((item, index) => ({
-      filename: item.filename,
-      link: links[index],
-      link_dl: item.link,
-    }));
-    return result;
-  } catch (error) {
-    console.error("Error:", error);
-    throw error;
+  const response = await axios.post(proxyEndpoint, { link }, { headers });
+  return {
+    filename: response.data.filename,
+    link: link,
+    link_dl: response.data.link,
+  };
+};
+
+export const debridLinks = async (links, onProgress) => {
+  const results = [];
+  const total = links.length;
+
+  for (let i = 0; i < links.length; i++) {
+    const result = await debridLink(links[i]);
+    results.push(result);
+    if (onProgress) {
+      onProgress({ current: i + 1, total });
+    }
   }
+
+  return results;
 };
 
 export async function getLiveStatus(sessionId, counter) {

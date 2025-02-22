@@ -16,7 +16,7 @@ function Home() {
     isLinksDisabled, 
     setIsLinksDisabled
   } = useDebridState();
-  const { debrid, debridResult, uploadProgress } = useDebrid();
+  const { debrid, debridResult, uploadProgress, debridProgress } = useDebrid();
   const location = useLocation();
   const [isDebridTriggered, setIsDebridTriggered] = useState(false);
 
@@ -69,7 +69,7 @@ function Home() {
           Debrid
         </Button>
       </div>
-      {debridResult && <DebridResultTable debridResult={debridResult} />}
+      {debridResult && <DebridResultTable debridResult={debridResult} debridProgress={debridProgress} />}
     </div>
   );
 }

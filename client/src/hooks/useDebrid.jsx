@@ -14,6 +14,7 @@ function isValidMagnetLink(link) {
 export function useDebrid() {
   const [debridResult, setDebridResult] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [debridProgress, setDebridProgress] = useState({ current: 0, total: 0 });
   const navigate = useNavigate();
   
   const debrid = (linksOrFile) => {
@@ -25,12 +26,14 @@ export function useDebrid() {
       }
       return true; // file path doesn't need to be filtered
     });
-  
+
+    setDebridProgress({ current: 0, total: 0 });
+    
     // Debrid each link or file (mapping each to a promise)
     const debridPromises = filteredLinksOrFiles.map(linkOrFile => {
       // If it's a link
       if (typeof linkOrFile === 'string' && !isValidMagnetLink(linkOrFile)) {
-        return debridLinks([linkOrFile])
+        return debridLinks([linkOrFile], setDebridProgress)
           .then(result => {
             setDebridResult(prevResult => [...prevResult, ...result]);
             return result;
@@ -48,30 +51,30 @@ export function useDebrid() {
             if (magnetID === null) {
               throw new Error('Failed to get magnet ID');
             }
-            return debridMagnet(magnetID);
-          })
-          .then(result => {
-            if (result.isPending) {
-              toast((t) => (
-                <div>
-                  ⏳ A Torrent is Pending...
-                  <Button
-                    className="ml-1 min-w-0 min-h-0 h-8 w-8" //p-0 text-xs inline-flex items-center justify-center
-                    isIconOnly
-                    onClick={() => {
-                      navigate("/pending-torrents");
-                      toast.dismiss(t.id); // Optionally dismiss the toast on click
-                    }}
-                  >
-                    <ExternalLink size={20}/>
-                  </Button>
-                </div>
-              ));
-              return result;
-            } else {
-              setDebridResult(prevResult => [...prevResult, ...result]);
-              return result;
-            }
+            return debridMagnet(magnetID, setDebridProgress)
+              .then(result => {
+                if (result.isPending) {
+                  toast((t) => (
+                    <div>
+                      ⏳ A Torrent is Pending...
+                      <Button
+                        className="ml-1 min-w-0 min-h-0 h-8 w-8" //p-0 text-xs inline-flex items-center justify-center
+                        isIconOnly
+                        onClick={() => {
+                          navigate("/pending-torrents");
+                          toast.dismiss(t.id); // Optionally dismiss the toast on click
+                        }}
+                      >
+                        <ExternalLink size={20}/>
+                      </Button>
+                    </div>
+                  ));
+                  return result;
+                } else {
+                  setDebridResult(prevResult => [...prevResult, ...result]);
+                  return result;
+                }
+              });
           });
       }
     });
@@ -89,5 +92,5 @@ export function useDebrid() {
     );
   };
 
-  return { debrid, debridResult, uploadProgress };
+  return { debrid, debridResult, uploadProgress, debridProgress };
 }

@@ -163,6 +163,37 @@ router.post("/debridLinks", extractApiKey, asyncHandler(async (req, res) => {
 
 /**
  * @swagger
+ * /debridLink:
+ *   post:
+ *     summary: Debrid a single link
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               link:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Link debrided successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *         description: Bad request
+ */
+router.post("/debridLink", extractApiKey, asyncHandler(async (req, res) => {
+  const { link } = req.body;
+  const apiEndpoint = createApiEndpoint('link/unlock', { apikey: req.apiKey, link });
+  const response = await apiCall('GET', apiEndpoint);
+  res.json(response.data);
+}));
+
+/**
+ * @swagger
  * /saveLinks:
  *   post:
  *     summary: Save multiple links

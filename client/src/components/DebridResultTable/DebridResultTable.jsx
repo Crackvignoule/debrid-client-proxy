@@ -1,10 +1,10 @@
-import { Tooltip } from '@nextui-org/react';
+import { Tooltip, Progress } from '@nextui-org/react';
 import { CommonTable, ActionButton } from '@components';
 import { useLinkManagement, useWindowResize } from '@hooks';
 import { copyToClipboard, exportLinksAsTxt, downloadAllLinks } from '@utils';
 import { Save, SaveAll, Download, Copy, FileDown, HardDriveDownload } from 'lucide-react';
 
-function DebridResultTable({ debridResult }) {
+function DebridResultTable({ debridResult, debridProgress }) {
   const { saveLinks } = useLinkManagement();
   const isSmallScreen = useWindowResize();
 
@@ -22,6 +22,21 @@ function DebridResultTable({ debridResult }) {
 
   return (
     <>
+      {debridProgress.total > 0 && debridProgress.current < debridProgress.total && (
+        <Progress
+          size="md"
+          radius="md"
+          classNames={{
+            base: "max-w-md",
+            track: "drop-shadow-md",
+            indicator: "bg-gradient-to-r from-indigo-500 from-20% via-cerulean via-50% to-turquoise to-90%",
+            label: "tracking-wider font-medium text-cadet-grey",
+            value: "text-cadet-grey",
+          }}
+          value={(debridProgress.current / debridProgress.total) * 100}
+          label={`${Math.round((debridProgress.current / debridProgress.total) * 100)}% (${debridProgress.current}/${debridProgress.total} files)`}
+        />
+      )}
       {debridResult.length > 0 && (
         <>
           <div className="flex items-center justify-center gap-2.5">
