@@ -1,7 +1,7 @@
-@import "@/index.scss";
+@use "@/index.scss" as index;
 
 .navbar {
-    background-color: $cadet-gray;
+    background-color: index.$cadet-gray;
     height: 4rem; // 60px -> 4rem (assuming 1rem = 15px)
     display: flex;
     align-items: center;
@@ -12,11 +12,11 @@
     .navbar__title {
         margin-right: 2rem; // 30px -> 2rem
         flex-shrink: 0;
-        color: $rich-black; // Override the color of the link
+        color: index.$rich-black; // Override the color of the link
         text-decoration: none; // Remove the underline of the link
   
         &:hover {
-          color: $rich-black; // Keep the color the same on hover
+          color: index.$rich-black; // Keep the color the same on hover
         }
 
         @media screen and (max-width: 768px) {
@@ -30,18 +30,18 @@
       flex-grow: 1; // Allow the links to take up remaining space
   
       .navbar__link {
-        color: $rich-black;
+        color: index.$rich-black;
         text-decoration: none;
         transition: color 0.3s ease;
   
         &:hover {
-          color: $cerulean;
+          color: index.$cerulean;
         }
       }
     }
     
     .navbar__settings {
-      color: $rich-black;
+      color: index.$rich-black;
       transition: transform 0.3s ease;
       
       &:hover {
